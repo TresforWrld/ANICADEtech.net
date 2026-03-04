@@ -1,233 +1,311 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THYNK UNLIMITED TECH</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #0d0d0d;
-            color: #ffffff;
-            line-height: 1.6;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THYNK UNLIMITED Tech | Digital Command Center</title>
 
-        header {
-            padding: 80px 20px;
-            text-align: center;
-            background: linear-gradient(135deg, #000000, #1a1a1a);
-        }
+<style>
+:root{
+  --navy:#0B1C2D;
+  --slate:#1F2E3D;
+  --gold:#C6A85C;
+  --electric:#00BFFF;
+  --white:#F5F7FA;
+  --gray:#94A3B8;
+}
 
-        header h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  scroll-behavior:smooth;
+  font-family: 'Segoe UI', sans-serif;
+}
 
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.8;
-        }
+body{
+  background:var(--navy);
+  color:var(--white);
+  line-height:1.6;
+}
 
-        section {
-            padding: 60px 20px;
-            max-width: 900px;
-            margin: auto;
-        }
+/* NAVIGATION */
+nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  background:rgba(11,28,45,0.85);
+  backdrop-filter:blur(10px);
+  padding:1rem 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:1000;
+}
 
-        h2 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: #00eaff;
-        }
+nav h1{
+  font-size:1.2rem;
+  letter-spacing:2px;
+  color:var(--gold);
+}
 
-        .cta-buttons {
-            margin-top: 20px;
-        }
+nav ul{
+  list-style:none;
+  display:flex;
+  gap:20px;
+}
 
-        .cta-buttons a {
-            display: inline-block;
-            padding: 12px 25px;
-            margin: 10px;
-            background: #00eaff;
-            color: #000;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-        }
+nav a{
+  text-decoration:none;
+  color:var(--white);
+  font-size:0.9rem;
+  transition:0.3s;
+}
 
-        ul {
-            margin-top: 10px;
-        }
+nav a:hover{
+  color:var(--electric);
+}
 
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            opacity: 0.6;
-            font-size: 0.9rem;
-        }
-    </style>
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:0 5%;
+  background:linear-gradient(to bottom right,#0B1C2D,#16293D);
+}
+
+.hero h2{
+  font-size:2.2rem;
+  margin-bottom:1rem;
+}
+
+.hero p{
+  max-width:600px;
+  color:var(--gray);
+  margin-bottom:2rem;
+}
+
+.btn{
+  padding:12px 28px;
+  border:none;
+  background:var(--electric);
+  color:#000;
+  cursor:pointer;
+  font-weight:bold;
+  border-radius:5px;
+  transition:0.3s;
+}
+
+.btn:hover{
+  background:var(--gold);
+  color:#000;
+}
+
+/* SECTIONS */
+section{
+  padding:80px 5%;
+}
+
+.section-title{
+  text-align:center;
+  margin-bottom:40px;
+  font-size:1.8rem;
+  color:var(--gold);
+}
+
+/* HUB SECTION */
+.hub{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:20px;
+}
+
+.hub-card{
+  background:var(--slate);
+  padding:40px;
+  border-radius:10px;
+  transition:0.3s;
+  text-align:center;
+}
+
+.hub-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+.hub-card h3{
+  margin-bottom:10px;
+}
+
+.hub-card p{
+  color:var(--gray);
+  margin-bottom:20px;
+}
+
+/* SERVICES GRID */
+.services{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:20px;
+}
+
+.service-card{
+  background:var(--slate);
+  padding:30px;
+  border-radius:10px;
+  transition:0.3s;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.service-card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 15px 35px rgba(0,0,0,0.5);
+}
+
+.service-card h4{
+  margin-bottom:10px;
+}
+
+.price{
+  color:var(--electric);
+  font-weight:bold;
+  margin:10px 0;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:30px 5%;
+  background:#08121D;
+  color:var(--gray);
+  font-size:0.85rem;
+}
+
+/* RESPONSIVE */
+@media(min-width:768px){
+  .hub{
+    grid-template-columns:1fr 1fr;
+  }
+  .services{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(min-width:1100px){
+  .services{
+    grid-template-columns:repeat(4,1fr);
+  }
+}
+</style>
 </head>
+
 <body>
 
-<header>
-    <h1>THINK BEYOND LIMITS</h1>
-    <p>Technology • Digital Income • Automation • Innovation</p>
-    <p>THYNK UNLIMITED TECH is a next-generation digital ecosystem empowering individuals, creators, and businesses with tools, systems, and opportunities to earn, scale, and dominate in the online economy.</p>
+<nav>
+  <h1>THYNK UNLIMITED</h1>
+  <ul>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#ecosystem">Ecosystem</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
-    <div class="cta-buttons">
-        <a href="#services">Get Started</a>
-        <a href="#agent">Join as an Agent</a>
-    </div>
-</header>
-
-<section id="about">
-    <h2>ABOUT US</h2>
-    <p>THYNK UNLIMITED TECH is a technology-driven digital innovation hub built to create income opportunities through smart systems, automation, and high-demand digital services.</p>
-
-    <p>We combine:</p>
-    <ul>
-        <li>Web development</li>
-        <li>AI automation</li>
-        <li>Digital advertising</li>
-        <li>Branding</li>
-        <li>Remote agent programs</li>
-    </ul>
-
-    <p>to build a complete ecosystem where anyone can start, grow, and earn using only their phone and internet connection.</p>
-
-    <p><strong>Our mission is simple: Give people the power to earn without limits.</strong></p>
-</section>
-
-<section id="vision">
-    <h2>OUR VISION</h2>
-    <p>To build Africa’s most powerful digital income and innovation ecosystem where technology, creativity, and smart systems create limitless opportunities.</p>
-</section>
-
-<section id="mission">
-    <h2>OUR MISSION</h2>
-    <ul>
-        <li>income-generating digital skills</li>
-        <li>scalable online systems</li>
-        <li>remote work opportunities</li>
-        <li>automation tools for business growth</li>
-    </ul>
-</section>
-
-<section id="services">
-    <h2>WHAT WE DO</h2>
-
-    <h3>WEB DEVELOPMENT</h3>
-    <ul>
-        <li>business websites</li>
-        <li>personal brands</li>
-        <li>landing pages</li>
-        <li>automated platforms</li>
-    </ul>
-
-    <h3>AI AUTOMATION</h3>
-    <ul>
-        <li>chatbots</li>
-        <li>auto-reply sales systems</li>
-        <li>content automation</li>
-        <li>digital workflows</li>
-    </ul>
-
-    <h3>DIGITAL ADVERTISING</h3>
-    <ul>
-        <li>businesses</li>
-        <li>artists</li>
-        <li>brands</li>
-        <li>online services</li>
-    </ul>
-
-    <h3>BRANDING & CREATOR SETUP</h3>
-    <ul>
-        <li>logo design</li>
-        <li>brand identity</li>
-        <li>digital presence systems</li>
-    </ul>
-
-    <h3>PREMIUM DIGITAL PRODUCTS</h3>
-    <p>Fast-moving, high-demand tools delivered quickly and securely.</p>
-</section>
-
-<section id="agent">
-    <h2>AGENT OPPORTUNITY</h2>
-    <p>Our agent program allows anyone to earn remotely by promoting THYNK UNLIMITED services.</p>
-
-    <h3>BENEFITS</h3>
-    <ul>
-        <li>15% commission on every sale</li>
-        <li>Work from anywhere</li>
-        <li>No capital required</li>
-        <li>Daily income potential</li>
-        <li>Phone-based business</li>
-    </ul>
-
-    <p><strong>This is not a job. This is a digital income system.</strong></p>
-</section>
-
-<section id="why">
-    <h2>WHY CHOOSE THYNK UNLIMITED TECH</h2>
-    <ul>
-        <li>Built for the modern digital economy</li>
-        <li>Designed for remote income generation</li>
-        <li>Fast delivery services</li>
-        <li>Scalable systems</li>
-        <li>Youth empowerment focused</li>
-        <li>Automation-driven growth</li>
-    </ul>
-</section>
-
-<section id="serve">
-    <h2>WHO WE SERVE</h2>
-    <ul>
-        <li>Students</li>
-        <li>Creators</li>
-        <li>Startups</li>
-        <li>Small businesses</li>
-        <li>Side hustlers</li>
-        <li>Freelancers</li>
-    </ul>
-</section>
-
-<section id="founder">
-    <h2>FOUNDER</h2>
-    <p><strong>Tresfor Zulu</strong><br>Founder & Digital Systems Architect</p>
-    <p>A visionary focused on building scalable digital income infrastructures that empower individuals through technology.</p>
-</section>
-
-<section id="philosophy">
-    <h2>CORE PHILOSOPHY</h2>
-    <p><strong>Don’t look for opportunities. Build systems that create them.</strong></p>
+<section class="hero">
+  <h2>Powering Africa’s Digital Transformation</h2>
+  <p>THYNK UNLIMITED Tech is your strategic technology partner delivering elite web, AI, and digital infrastructure solutions for businesses and innovators.</p>
+  <button class="btn" onclick="scrollToSection('services')">Explore Services</button>
 </section>
 
 <section id="ecosystem">
-    <h2>OUR ECOSYSTEM</h2>
-    <p>THYNK UNLIMITED TECH is a complete digital earning infrastructure combining technology, automation, and people into one scalable network.</p>
+  <h2 class="section-title">The Ecosystem Hub</h2>
+  <div class="hub">
+    <div class="hub-card">
+      <h3>SkillRise Africa</h3>
+      <p>Empowering individuals with practical digital skills and certifications for career growth.</p>
+      <a href="https://tresforwrld.github.io/SkillRise-Africa-/" target="_blank">
+        <button class="btn">Visit Platform</button>
+      </a>
+    </div>
 
-    <ul>
-        <li><a href="https://bit.ly/THYNKUNLIMITED" style="color:#00eaff;">THYNK UNLIMITED Intern Hub</a></li>
-        <li><a href="https://bit.ly/SkillRiseAfrica" style="color:#00eaff;">SkillRise Africa</a></li>
-        <li>ANICADE ELEVATE (coming soon)</li>
-    </ul>
+    <div class="hub-card">
+      <h3>THYNK UNLIMITED Agents</h3>
+      <p>Elite digital agents delivering web, branding, and technical services across Africa.</p>
+      <a href="https://tresforwrld.github.io/THYNK-UNLIMITED-/" target="_blank">
+        <button class="btn">Enter Agents Hub</button>
+      </a>
+    </div>
+  </div>
 </section>
 
-<section id="future">
-    <h2>THE FUTURE</h2>
-    <ul>
-        <li>digital training programs</li>
-        <li>automated agent dashboards</li>
-        <li>creator monetization systems</li>
-        <li>a full online service marketplace</li>
-    </ul>
+<section id="services">
+  <h2 class="section-title">Our Core Services</h2>
+  <div class="services">
+
+    <div class="service-card">
+      <div>
+        <h4>Custom Web Development</h4>
+        <p>High-performance, SEO-optimized business websites.</p>
+        <div class="price">From $499</div>
+      </div>
+      <button class="btn" onclick="purchase('Custom Web Development')">Get Started</button>
+    </div>
+
+    <div class="service-card">
+      <div>
+        <h4>Digital Brand Strategy</h4>
+        <p>Comprehensive brand identity and market positioning.</p>
+        <div class="price">From $299</div>
+      </div>
+      <button class="btn" onclick="purchase('Digital Brand Strategy')">Get Started</button>
+    </div>
+
+    <div class="service-card">
+      <div>
+        <h4>AI Solutions Integration</h4>
+        <p>Automating workflows with custom AI implementations.</p>
+        <div class="price">From $799</div>
+      </div>
+      <button class="btn" onclick="purchase('AI Solutions Integration')">Get Started</button>
+    </div>
+
+    <div class="service-card">
+      <div>
+        <h4>Technical Support & Maintenance</h4>
+        <p>24/7 technical oversight and security updates.</p>
+        <div class="price">$99/mo</div>
+      </div>
+      <button class="btn" onclick="purchase('Technical Support & Maintenance')">Subscribe</button>
+    </div>
+
+  </div>
+</section>
+
+<section id="contact">
+  <h2 class="section-title">Ready to Scale?</h2>
+  <div style="text-align:center;">
+    <button class="btn" onclick="alert('Payment Gateway Integration Coming Soon')">Proceed to Payment</button>
+  </div>
 </section>
 
 <footer>
-    © 2026 THYNK UNLIMITED TECH — All Rights Reserved
+  © 2026 THYNK UNLIMITED Tech. All Rights Reserved.
 </footer>
+
+<script>
+function scrollToSection(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+
+function purchase(service){
+  alert("You selected: " + service + "\\nPayment integration placeholder activated.");
+}
+</script>
 
 </body>
 </html>
