@@ -223,11 +223,12 @@
 
     <script>
         // Initialize users in localStorage if not exists
-        if (!localStorage.getItem('users')) {
-            localStorage.setItem('users', JSON.stringify({
+        if (!localStorage.getItem('anicade_users')) {
+            localStorage.setItem('anicade_users', JSON.stringify({
                 'demo': 'password123',
                 'admin': 'admin123',
-                'user': 'user123'
+                'anicade': 'tech2026',
+                'guest': 'guest123'
             }));
         }
 
@@ -282,12 +283,14 @@
 
             if (isLoginMode) {
                 // Login logic
-                const users = JSON.parse(localStorage.getItem('users'));
+                const users = JSON.parse(localStorage.getItem('anicade_users'));
                 
                 if (users[username] && users[username] === password) {
+                    // Store current logged in user
+                    localStorage.setItem('anicade_current_user', username);
                     successMessage.textContent = 'Login successful! Redirecting...';
                     setTimeout(() => {
-                        window.location.href = 'dashboard.html'; // You can change this to your main page
+                        window.location.href = 'dashboard.html'; // Change this to your main page
                     }, 1500);
                 } else {
                     message.textContent = 'Invalid username or password';
@@ -306,7 +309,7 @@
                     return;
                 }
                 
-                const users = JSON.parse(localStorage.getItem('users'));
+                const users = JSON.parse(localStorage.getItem('anicade_users'));
                 
                 if (users[username]) {
                     message.textContent = 'Username already exists';
@@ -315,7 +318,7 @@
                 
                 // Add new user
                 users[username] = password;
-                localStorage.setItem('users', JSON.stringify(users));
+                localStorage.setItem('anicade_users', JSON.stringify(users));
                 
                 successMessage.textContent = 'Account created successfully! You can now login.';
                 
@@ -335,7 +338,7 @@
                 return;
             }
             
-            const users = JSON.parse(localStorage.getItem('users'));
+            const users = JSON.parse(localStorage.getItem('anicade_users'));
             
             if (users[username]) {
                 message.style.color = 'lawngreen';
@@ -355,6 +358,11 @@
                 handleAuth();
             }
         });
+
+        // Auto-fill demo credentials for quick testing (optional)
+        window.onload = function() {
+            console.log('ANICADE tech login ready! Demo credentials: demo/password123');
+        }
     </script>
 </body>
 </html>
