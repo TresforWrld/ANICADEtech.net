@@ -3,22 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ANICADE TECH | Welcome</title>
+    <title>ANICADE TECH | Site Relocated</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Open Graph / Link Preview -->
-    <meta property="og:title" content="ANICADE TECH | Professional Tech Solutions Zambia">
-    <meta property="og:description" content="↙𝖳𝖾𝖼𝗁 𝖡𝖾𝗒𝗈𝗇𝖽 𝖫𝗂𝗆𝗂𝗍𝗌!↘Your trusted partner for web development, digital marketing, AI automation and design.">
-    <meta property="og:image" content="https://tresforwrld.github.io/ANICADEtech.net/logo.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:url" content="https://bit.ly/ANICADEtech">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ANICADE TECH | Professional Tech Solutions Zambia">
-    <meta name="twitter:description" content="↙𝖳𝖾𝖼𝗁 𝖡𝖾𝗒𝗈𝗇𝖽 𝖫𝗂𝗆𝗂𝗍𝗌!↘Your trusted partner for web development, digital marketing, AI automation and design.">
-    <meta name="twitter:image" content="https://tresforwrld.github.io/ANICADEtech.net/logo.png">
-
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -28,20 +14,24 @@
             --gold: #C6A85C;
             --text: #F5F7FA;
             --text-light: #94A3B8;
+            --success: #39ff14;
             --border: rgba(255,255,255,0.07);
             --card-bg: rgba(15, 30, 48, 0.88);
         }
 
-        html { scroll-behavior: smooth; }
-
         body {
             background: var(--primary);
             color: var(--text);
+            line-height: 1.6;
             font-family: 'Rajdhani', sans-serif;
             overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* ===== RINGS BG ===== */
+        /* ===== BACKGROUND RINGS ===== */
         .rings-bg {
             position: fixed;
             top: 0; left: 0;
@@ -50,6 +40,7 @@
             pointer-events: none;
             overflow: hidden;
         }
+
         .ring-el {
             position: absolute;
             top: 50%; left: 50%;
@@ -57,613 +48,332 @@
             border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
             will-change: transform;
         }
-        .ring-el:nth-child(1) { width: 900px; height: 900px; margin: -450px 0 0 -450px; border-color: rgba(0,191,255,0.09); animation: spin1 22s linear infinite; }
-        .ring-el:nth-child(2) { width: 650px; height: 650px; margin: -325px 0 0 -325px; border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%; border-color: rgba(198,168,92,0.07); animation: spin2 15s linear infinite; }
-        .ring-el:nth-child(3) { width: 430px; height: 430px; margin: -215px 0 0 -215px; border-color: rgba(0,191,255,0.05); animation: spin1 32s linear infinite reverse; }
+        .ring-el:nth-child(1) {
+            width: 860px; height: 860px;
+            margin: -430px 0 0 -430px;
+            border-color: rgba(0, 191, 255, 0.09);
+            animation: spin1 22s linear infinite;
+        }
+        .ring-el:nth-child(2) {
+            width: 620px; height: 620px;
+            margin: -310px 0 0 -310px;
+            border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
+            border-color: rgba(198, 168, 92, 0.07);
+            animation: spin2 15s linear infinite;
+        }
+        .ring-el:nth-child(3) {
+            width: 420px; height: 420px;
+            margin: -210px 0 0 -210px;
+            border-color: rgba(0, 191, 255, 0.05);
+            animation: spin1 32s linear infinite reverse;
+        }
 
         @keyframes spin1 { to { transform: rotate(360deg); } }
         @keyframes spin2 { to { transform: rotate(-360deg); } }
 
-        /* ===== HERO ===== */
-        .hero {
+        /* ===== MAIN CONTENT ===== */
+        .container {
             position: relative;
             z-index: 2;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            max-width: 700px;
+            margin: 40px 20px;
+            padding: 0;
             text-align: center;
-            padding: 100px 24px 40px;
         }
 
-        /* ===== TOP NAV ===== */
-        .top-bar {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 100;
+        /* ===== CARD ===== */
+        .relocation-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 50px 40px;
+            backdrop-filter: blur(4px);
+            animation: fadeUp 0.8s ease both;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== LOGO ===== */
+        .logo-wrap {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .logo-ring {
+            position: relative;
+            width: 120px; height: 120px;
+            display: flex;
             align-items: center;
-            padding: 16px 36px;
-            background: rgba(11, 28, 45, 0.85);
-            border-bottom: 1px solid rgba(198,168,92,0.1);
-            animation: fadeDown 0.7s ease both;
+            justify-content: center;
         }
-        @keyframes fadeDown { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: translateY(0); } }
+        .logo-ring::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
+            border: 2px solid rgba(198, 168, 92, 0.5);
+            will-change: transform;
+            animation: spin1 8s linear infinite;
+        }
+        .logo-ring::after {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
+            border: 1.5px solid rgba(0, 191, 255, 0.4);
+            will-change: transform;
+            animation: spin2 5s linear infinite;
+        }
+        .logo-img {
+            width: 88px; height: 88px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 0 28px rgba(198, 168, 92, 0.3);
+            border: 2px solid rgba(198, 168, 92, 0.35);
+        }
 
-        .top-logo {
+        /* ===== TYPOGRAPHY ===== */
+        .eyebrow {
             font-family: 'Orbitron', sans-serif;
-            font-size: 18px;
-            font-weight: 900;
-            color: var(--gold);
-            letter-spacing: 2px;
-            text-shadow: 0 0 16px rgba(198,168,92,0.3);
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .top-logo span { color: var(--accent); }
-
-        .top-nav-links { display: flex; gap: 6px; align-items: center; }
-        .top-nav-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 600;
-            letter-spacing: 0.5px;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            padding: 7px 14px;
-            border-radius: 6px;
-            transition: all 0.2s;
-            cursor: pointer;
+            color: var(--accent);
+            margin-bottom: 20px;
+            opacity: 0.8;
         }
-        .top-nav-links a:hover { background: rgba(0,191,255,0.1); color: var(--accent); }
-        .top-nav-links .cta-nav {
-            background: rgba(198,168,92,0.1);
-            border: 1px solid rgba(198,168,92,0.3);
-            color: var(--gold) !important;
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 38px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+        h1 .gold { color: var(--gold); text-shadow: 0 0 28px rgba(198, 168, 92, 0.4); }
+        h1 .blue { color: var(--accent); text-shadow: 0 0 28px rgba(0, 191, 255, 0.35); }
+
+        .message {
+            font-size: 18px;
+            color: var(--text-light);
+            margin: 20px 0 12px;
+            line-height: 1.6;
+        }
+
+        .old-address {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 25px 0;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 15px;
+            color: rgba(245,247,250,0.6);
+            word-break: break-all;
+        }
+
+        .old-address span {
+            color: #ff6b6b;
+            font-family: monospace;
+            font-size: 14px;
+            display: inline-block;
+            margin-top: 8px;
+            padding: 6px 12px;
+            background: rgba(255,107,107,0.1);
             border-radius: 8px;
         }
-        .top-nav-links .cta-nav:hover { background: rgba(198,168,92,0.2) !important; color: #fff !important; }
 
-        /* ===== HERO CONTENT ===== */
-        .hero-inner { max-width: 860px; }
-
-        .hero-logo-wrap { display: flex; justify-content: center; margin-bottom: 30px; animation: fadeUp 1s ease 0.2s both; }
-        .hero-logo-ring { position: relative; width: 150px; height: 150px; display: flex; align-items: center; justify-content: center; }
-        .hero-logo-ring::before { content: ''; position: absolute; inset: 0; border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%; border: 2px solid rgba(198,168,92,0.5); will-change: transform; animation: spin1 6s linear infinite; }
-        .hero-logo-ring::after { content: ''; position: absolute; inset: 9px; border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%; border: 1.5px solid rgba(0,191,255,0.4); will-change: transform; animation: spin2 4s linear infinite; }
-        .hero-logo-img { width: 112px; height: 112px; border-radius: 50%; object-fit: cover; position: relative; z-index: 2; box-shadow: 0 0 36px rgba(198,168,92,0.35), 0 0 70px rgba(0,191,255,0.12); border: 2px solid rgba(198,168,92,0.4); }
-
-        .hero-eyebrow {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: var(--accent);
-            opacity: 0.75;
-            margin-bottom: 16px;
-            animation: fadeUp 1s ease 0.3s both;
-        }
-
-        .hero-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 62px;
-            font-weight: 900;
-            line-height: 1.05;
-            letter-spacing: -2px;
-            margin-bottom: 22px;
-            animation: fadeUp 1s ease 0.4s both;
-        }
-        .hero-title .line-gold { color: var(--gold); text-shadow: 0 0 40px rgba(198,168,92,0.45); display: block; }
-        .hero-title .line-blue { color: var(--accent); text-shadow: 0 0 40px rgba(0,191,255,0.35); display: block; font-size: 36px; letter-spacing: 1px; margin-top: 6px; }
-
-        .hero-tagline {
-            font-size: 19px;
-            color: var(--text-light);
-            max-width: 580px;
-            margin: 0 auto 40px;
-            line-height: 1.6;
-            font-weight: 400;
-            animation: fadeUp 1s ease 0.5s both;
-        }
-
-        .hero-cta-group {
-            display: flex;
-            gap: 14px;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeUp 1s ease 0.6s both;
-        }
-
-        .btn-primary {
+        /* ===== BUTTON ===== */
+        .visit-btn {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 16px 36px;
-            background: linear-gradient(135deg, rgba(198,168,92,0.18), rgba(0,191,255,0.12));
+            justify-content: center;
+            gap: 12px;
+            background: linear-gradient(135deg, rgba(198,168,92,0.2), rgba(0,191,255,0.15));
             border: 1px solid rgba(198,168,92,0.5);
-            border-radius: 50px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--gold);
-            text-decoration: none;
-            transition: all 0.3s;
-            box-shadow: 0 0 30px rgba(198,168,92,0.1);
-            cursor: pointer;
-        }
-        .btn-primary:hover {
-            background: linear-gradient(135deg, rgba(198,168,92,0.3), rgba(0,191,255,0.2));
-            border-color: var(--gold);
-            box-shadow: 0 0 50px rgba(198,168,92,0.25);
-            transform: translateY(-2px);
-            color: #fff;
-        }
-
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
+            border-radius: 60px;
             padding: 16px 36px;
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 50px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 700;
             letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--text-light);
+            color: var(--gold);
             text-decoration: none;
-            transition: all 0.3s;
             cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 15px 0 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
-        .btn-secondary:hover {
-            border-color: rgba(0,191,255,0.4);
+
+        .visit-btn:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(135deg, rgba(198,168,92,0.3), rgba(0,191,255,0.25));
+            box-shadow: 0 8px 25px rgba(198,168,92,0.2);
+            border-color: rgba(198,168,92,0.7);
+        }
+
+        .visit-btn svg {
+            transition: transform 0.2s;
+        }
+
+        .visit-btn:hover svg {
+            transform: translateX(5px);
+        }
+
+        /* ===== COUNTDOWN / REDIRECT NOTE ===== */
+        .redirect-note {
+            font-size: 12px;
+            color: rgba(148,163,184,0.5);
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .redirect-note a {
             color: var(--accent);
-            transform: translateY(-2px);
+            text-decoration: none;
         }
 
-        /* scroll indicator */
-        .scroll-hint {
-            position: absolute;
-            bottom: 32px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            animation: fadeUp 1s ease 1s both;
+        .redirect-note a:hover {
+            text-decoration: underline;
         }
-        .scroll-hint span {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 9px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: rgba(148,163,184,0.4);
-        }
-        .scroll-arrow {
-            width: 20px; height: 20px;
-            border-right: 2px solid rgba(198,168,92,0.3);
-            border-bottom: 2px solid rgba(198,168,92,0.3);
-            transform: rotate(45deg);
-            animation: bounce 2s ease infinite;
-        }
-        @keyframes bounce { 0%,100% { transform: rotate(45deg) translateY(0); } 50% { transform: rotate(45deg) translateY(5px); } }
-
-        /* ===== STATS STRIP ===== */
-        .stats-strip {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            justify-content: center;
-            gap: 0;
-            border-top: 1px solid rgba(198,168,92,0.1);
-            border-bottom: 1px solid rgba(198,168,92,0.1);
-            background: rgba(11,28,45,0.6);
-            flex-wrap: wrap;
-            animation: fadeUp 0.8s ease 0.2s both;
-        }
-        .stat-item {
-            flex: 1;
-            min-width: 160px;
-            padding: 28px 20px;
-            text-align: center;
-            border-right: 1px solid rgba(198,168,92,0.08);
-        }
-        .stat-item:last-child { border-right: none; }
-        .stat-num {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 28px;
-            font-weight: 900;
-            color: var(--gold);
-            text-shadow: 0 0 20px rgba(198,168,92,0.3);
-            display: block;
-            margin-bottom: 4px;
-        }
-        .stat-label {
-            font-size: 12px;
-            color: var(--text-light);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        /* ===== ABOUT SECTION ===== */
-        .about {
-            position: relative;
-            z-index: 2;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 100px 24px;
-        }
-        .about-eyebrow {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: var(--accent);
-            opacity: 0.75;
-            margin-bottom: 16px;
-            text-align: center;
-        }
-        .about-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 32px;
-            font-weight: 900;
-            text-align: center;
-            margin-bottom: 16px;
-            letter-spacing: -0.5px;
-        }
-        .about-title span { color: var(--gold); text-shadow: 0 0 24px rgba(198,168,92,0.3); }
-        .about-divider {
-            width: 60px; height: 2px;
-            background: linear-gradient(to right, var(--gold), var(--accent));
-            margin: 0 auto 50px;
-            border-radius: 2px;
-        }
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-            margin-bottom: 70px;
-        }
-        .about-text p {
-            font-size: 16px;
-            color: var(--text-light);
-            line-height: 1.8;
-            margin-bottom: 18px;
-            font-weight: 400;
-        }
-        .about-text p strong { color: var(--text); font-weight: 600; }
-        .about-text .highlight {
-            border-left: 3px solid var(--gold);
-            padding-left: 18px;
-            font-style: italic;
-            color: rgba(245,247,250,0.7);
-            font-size: 15px;
-            margin-top: 24px;
-        }
-        .about-badges { display: flex; flex-direction: column; gap: 14px; }
-        .about-badge {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 18px 22px;
-            transition: border-color 0.25s, transform 0.25s;
-        }
-        .about-badge:hover { border-color: rgba(198,168,92,0.3); transform: translateX(4px); }
-        .badge-icon { flex-shrink: 0; display: flex; align-items: center; }
-        .badge-content h4 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: var(--gold);
-            margin-bottom: 3px;
-        }
-        .badge-content p { font-size: 13px; color: var(--text-light); margin: 0; line-height: 1.4; }
-
-        /* pillars */
-        .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-        .pillar {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 30px 22px;
-            text-align: center;
-            transition: border-color 0.25s, transform 0.25s;
-        }
-        .pillar:hover { border-color: rgba(0,191,255,0.25); transform: translateY(-4px); }
-        .pillar-icon { margin-bottom: 14px; display: flex; justify-content: center; }
-        .pillar h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--text);
-            margin-bottom: 10px;
-        }
-        .pillar p { font-size: 13px; color: var(--text-light); line-height: 1.5; }
-
-        /* ===== FINAL CTA ===== */
-        .final-cta {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            padding: 80px 24px 100px;
-            background: linear-gradient(to bottom, transparent, rgba(0,191,255,0.03), transparent);
-        }
-        .final-cta h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 30px;
-            font-weight: 900;
-            margin-bottom: 14px;
-            letter-spacing: -0.5px;
-        }
-        .final-cta h2 span { color: var(--gold); }
-        .final-cta p { font-size: 16px; color: var(--text-light); max-width: 500px; margin: 0 auto 36px; }
 
         /* ===== FOOTER ===== */
-        .site-footer {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            padding: 28px 24px;
-            border-top: 1px solid rgba(198,168,92,0.1);
-            color: var(--text-light);
-            font-size: 13px;
-        }
-        .site-footer .footer-logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 16px;
-            font-weight: 900;
-            color: var(--gold);
-            letter-spacing: 3px;
-            margin-bottom: 12px;
-            text-shadow: 0 0 16px rgba(198,168,92,0.25);
-            cursor: pointer;
-        }
-        .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 14px; }
-        .footer-links a {
-            color: rgba(148,163,184,0.5);
-            text-decoration: none;
+        .footer-note {
+            margin-top: 30px;
             font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            transition: color 0.2s;
-            cursor: pointer;
+            color: rgba(148,163,184,0.4);
+            text-align: center;
         }
-        .footer-links a:hover { color: var(--accent); }
-        .footer-links .sep { color: rgba(255,255,255,0.12); }
-
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
 
         /* ===== MOBILE ===== */
-        @media (max-width: 768px) {
-            .top-bar { padding: 14px 18px; }
-            .top-nav-links a:not(.cta-nav) { display: none; }
-            .hero-title { font-size: 36px; letter-spacing: -1px; }
-            .hero-title .line-blue { font-size: 22px; }
-            .about-grid { grid-template-columns: 1fr; gap: 36px; }
-            .pillars { grid-template-columns: 1fr; }
-            .stat-item { min-width: 120px; padding: 20px 12px; }
-            .stat-num { font-size: 22px; }
-            .ring-el:nth-child(1) { width: 500px; height: 500px; margin: -250px 0 0 -250px; }
+        @media (max-width: 600px) {
+            .relocation-card { padding: 35px 25px; }
+            h1 { font-size: 28px; }
+            .message { font-size: 15px; }
+            .visit-btn { padding: 12px 28px; font-size: 12px; }
+            .old-address span { font-size: 11px; }
+            .ring-el:nth-child(1) { width: 480px; height: 480px; margin: -240px 0 0 -240px; }
             .ring-el:nth-child(2) { width: 360px; height: 360px; margin: -180px 0 0 -180px; }
-            .ring-el:nth-child(3) { width: 240px; height: 240px; margin: -120px 0 0 -120px; }
+            .ring-el:nth-child(3) { width: 250px; height: 250px; margin: -125px 0 0 -125px; }
         }
     </style>
-<script defer data-domain="tresforwrld.github.io/8iukLT" src="https://api.publytics.net/js/script.manual.min.js"></script>
-<script>
-    window.publytics = window.publytics || function() { (window.publytics.q = window.publytics.q || []).push(arguments) };
-    publytics('pageview');
-</script>
 </head>
 <body>
 
-    <div class="rings-bg">
-        <div class="ring-el"></div>
-        <div class="ring-el"></div>
-        <div class="ring-el"></div>
+<div class="rings-bg">
+    <div class="ring-el"></div>
+    <div class="ring-el"></div>
+    <div class="ring-el"></div>
+</div>
+
+<div class="container">
+    <div class="relocation-card">
+        
+        <div class="logo-wrap">
+            <div class="logo-ring">
+                <img src="https://i.imgur.com/RcBmjWM.png" alt="ANICADE TECH Logo" class="logo-img">
+            </div>
+        </div>
+
+        <div class="eyebrow">WE'VE MOVED</div>
+        
+        <h1>
+            <span class="gold">ANICADE TECH</span><br>
+            <span class="blue">Has Relocated</span>
+        </h1>
+        
+        <p class="message">
+            Our website has moved to a new home.<br>
+            The old address is no longer available.
+        </p>
+
+        <div class="old-address">
+            ⚠️ Old site address (no longer active):
+            <span id="oldUrl">https://anicade-tech-old.netlify.app</span>
+        </div>
+
+        <a href="#" id="newSiteLink" class="visit-btn">
+            Visit New Website
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+            </svg>
+        </a>
+
+        <div class="redirect-note">
+            ⏳ You will be redirected automatically in <strong id="countdown">10</strong> seconds<br>
+            or <a href="https://anicadetech.xyz" id="redirectLink">click here to go now</a>
+        </div>
+
     </div>
 
-    <!-- TOP NAV — all links → login.html -->
-    <header class="top-bar">
-        <a onclick="goLogin()" class="top-logo">ANICADE<span>.</span>TECH</a>
-        <nav class="top-nav-links">
-            <a onclick="goLogin()">Services</a>
-            <a onclick="goLogin()">Agents</a>
-            <a href="terms.html">Terms</a>
-            <a onclick="goLogin()" class="cta-nav">Login</a>
-        </nav>
-    </header>
-
-    <!-- HERO -->
-    <section class="hero">
-        <div class="hero-inner">
-            <div class="hero-logo-wrap">
-                <div class="hero-logo-ring">
-                    <img src="https://i.imgur.com/9mjKZAj.jpeg" alt="ANICADE TECH" class="hero-logo-img">
-                </div>
-            </div>
-            <div class="hero-eyebrow">Tech Beyond Limits</div>
-            <h1 class="hero-title">
-                <span class="line-gold">ANICADE TECH</span>
-                <span class="line-blue">Building Zambia's Digital Future</span>
-            </h1>
-            <p class="hero-tagline">Professional web development, AI automation, digital marketing and design services — built for businesses that mean business.</p>
-            <div class="hero-cta-group">
-                <a onclick="handleGetStarted()" class="btn-primary" id="mainCta">Get Started →</a>
-                <a href="#about" class="btn-secondary">Learn More ↓</a>
-            </div>
-        </div>
-        <div class="scroll-hint">
-            <span></span>
-            <div class="scroll-arrow"></div>
-        </div>
-    </section>
-
-    <!-- STATS STRIP -->
-    <div class="stats-strip">
-        <div class="stat-item">
-            <span class="stat-num">10+</span>
-            <span class="stat-label">Service Categories</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-num">15%</span>
-            <span class="stat-label">Agent Commission</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-num">K100</span>
-            <span class="stat-label">Starting Price</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-num">24/7</span>
-            <span class="stat-label">WhatsApp Support</span>
-        </div>
+    <div class="footer-note">
+        ANICADE TECH — Professional Tech Solutions
     </div>
+</div>
 
-    <!-- ABOUT -->
-    <section class="about" id="about">
-        <div class="about-eyebrow">Who We Are:</div>
-        <h2 class="about-title">Built in Zambia. <span>Built for Zambia.</span></h2>
-        <div class="about-divider"></div>
-
-        <div class="about-grid">
-            <div class="about-text">
-                <p><strong>ANICADE TECH</strong> is a Local-based technology company founded with one mission — to make professional digital services accessible to every business in Zambia, regardless of size.</p>
-                <p>From a basic one-page website to a full AI-powered business automation system, we build the tools that help Zambian entrepreneurs and companies compete in the digital age.</p>
-                <p>We also run an <strong>Agent Programme</strong> — giving motivated individuals across Zambia the opportunity to earn real commission income by connecting businesses with our services.</p>
-                <div class="highlight">"Technology should empower every Zambian business — not just the big ones."</div>
-            </div>
-            <div class="about-badges">
-                <div class="about-badge">
-                    <div class="badge-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-                    <div class="badge-content">
-                        <h4>Local & Trusted</h4>
-                        <p>Based Locally, we understand the Zambian market and speak your language.</p>
-                    </div>
-                </div>
-                <div class="about-badge">
-                    <div class="badge-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-                    <div class="badge-content">
-                        <h4>Fast Delivery</h4>
-                        <p>Most projects delivered within days — not weeks — via WhatsApp coordination.</p>
-                    </div>
-                </div>
-                <div class="about-badge">
-                    <div class="badge-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><polyline points="6 3 18 3 22 9 12 22 2 9 6 3"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="12" y1="3" x2="12" y2="22"/></svg></div>
-                    <div class="badge-content">
-                        <h4>Professional Quality</h4>
-                        <p>World-class design and development standards at Zambian prices.</p>
-                    </div>
-                </div>
-                <div class="about-badge">
-                    <div class="badge-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 7.65l1.06 1.06L12 21.23l7.77-7.77 1.06-1.06a5.4 5.4 0 0 0 0-7.65z"/></svg></div>
-                    <div class="badge-content">
-                        <h4>Agent Network</h4>
-                        <p>Join our growing network of agents and earn 15% on every sale you close.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- PILLARS -->
-        <div class="pillars">
-            <div class="pillar">
-                <span class="pillar-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
-                <h3>Web & Digital</h3>
-                <p>From simple landing pages to full e-commerce stores — we build it all.</p>
-            </div>
-            <div class="pillar">
-                <span class="pillar-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h1v6H9z"/><path d="M14 9h1v6h-1z"/><line x1="9" y1="1" x2="9" y2="3"/><line x1="15" y1="1" x2="15" y2="3"/></svg></span>
-                <h3>AI & Automation</h3>
-                <p>Chatbots, workflow tools and content systems that work while you sleep.</p>
-            </div>
-            <div class="pillar">
-                <span class="pillar-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="8.5" cy="7.5" r=".5" fill="var(--accent)"/><circle cx="15.5" cy="7.5" r=".5" fill="var(--accent)"/><circle cx="15.5" cy="12.5" r=".5" fill="var(--accent)"/><circle cx="8.5" cy="12.5" r=".5" fill="var(--accent)"/></svg></span>
-                <h3>Design & Brand</h3>
-                <p>Logos, identity kits and visuals that make your brand unforgettable.</p>
-            </div>
-            <div class="pillar">
-                <span class="pillar-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></span>
-                <h3>Advertising</h3>
-                <p>Ad creatives, campaign management and high-converting landing pages.</p>
-            </div>
-            <div class="pillar">
-                <span class="pillar-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18" stroke-linecap="round" stroke-width="2.5"/><polyline points="8 6 12 10 16 6"/></svg></span>
-                <h3>Premium Apps</h3>
-                <p>Lifetime access to premium digital tools at prices that make sense.</p>
-            </div>
-            <div class="pillar">
-                <span class="pillar-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M9.5 2a2.5 2.5 0 0 1 5 0v1.5M9.5 2C6 2 3 5 3 8.5c0 2.5 1.5 4.5 3.5 5.5v2a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-2c2-1 3.5-3 3.5-5.5C21 5 18 2 14.5 2"/><line x1="12" y1="8" x2="12" y2="14"/></svg></span>
-                <h3>Agent Income</h3>
-                <p>Earn 15% commission — no investment required, just your network.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- FINAL CTA -->
-    <section class="final-cta">
-        <h2>Ready to <span>Get Started?</span></h2>
-        <p>Join other Zambian businesses and entrepreneurs already working with ANICADE TECH.</p>
-        <div class="hero-cta-group">
-            <a onclick="handleGetStarted()" class="btn-primary">Create Account →</a>
-            <a onclick="goLogin()" class="btn-secondary">View Services</a>
-        </div>
-    </section>
-
-    <!-- FOOTER — all links → login.html except Terms -->
-    <footer class="site-footer">
-        <div class="footer-logo" onclick="goLogin()">ANICADE.TECH</div>
-        <p style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Kabwe, Zambia &nbsp;·&nbsp; <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18" stroke-linecap="round" stroke-width="3"/></svg> +260 777 083 995 &nbsp;·&nbsp; <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> <a href="mailto:anicadetech@gmail.com" style="color:var(--text-light);text-decoration:none;vertical-align:middle">anicadetech@gmail.com</a></p>
-        <div class="footer-links">
-            <a onclick="goLogin()">Services</a>
-            <span class="sep">·</span>
-            <a onclick="goLogin()">Become an Agent</a>
-            <span class="sep">·</span>
-            <a href="terms.html">Terms of Service</a>
-            <span class="sep">·</span>
-            <a href="terms.html#privacy">Privacy Policy</a>
-            <span class="sep">·</span>
-            <a onclick="goLogin()">Login</a>
-        </div>
-        <p style="margin-top:14px;font-size:11px;opacity:0.3;">© 2026 ANICADE TECH. All rights reserved.</p>
-    </footer>
-
-    <script>
-        const SERVICES_URL = 'https://tresforwrld.github.io/ANICADEtech.net-in/#';
-
-        function isLoggedIn() {
-            return !!localStorage.getItem('anicade_current_user');
+<script>
+    // ============================================================
+    // UPDATE THIS URL TO YOUR NEW WEBSITE ADDRESS
+    // ============================================================
+    const NEW_SITE_URL = "https://anicadetech.xyz";  // <-- CHANGE THIS TO YOUR NEW DOMAIN
+    
+    // Display the old URL (can also be customized)
+    const OLD_SITE_URL = "https://anicade-tech-old.netlify.app";
+    
+    // ============================================================
+    
+    // Set the old URL display
+    document.getElementById('oldUrl').textContent = OLD_SITE_URL;
+    
+    // Set all links to the new site
+    const allLinks = document.querySelectorAll('#newSiteLink, #redirectLink');
+    allLinks.forEach(link => {
+        link.href = NEW_SITE_URL;
+    });
+    
+    // Auto-redirect countdown
+    let secondsLeft = 10;
+    const countdownEl = document.getElementById('countdown');
+    
+    const countdownInterval = setInterval(() => {
+        secondsLeft--;
+        if (countdownEl) {
+            countdownEl.textContent = secondsLeft;
         }
-
-        // Every nav/footer/secondary link always goes to login
-        function goLogin() {
-            window.location.href = 'login.html';
+        
+        if (secondsLeft <= 0) {
+            clearInterval(countdownInterval);
+            window.location.href = NEW_SITE_URL;
         }
+    }, 1000);
+    
+    // Optional: Pause countdown if user clicks the button (they'll navigate away anyway)
+    // But no need to interfere - they'll leave the page.
+    
+    // Smooth fade-in for the card (already handled by CSS)
+    
+    // For debugging - log the new site URL
+    console.log('Redirecting to:', NEW_SITE_URL);
+</script>
 
-        // ONLY the big "Get Started / Create Account" button is smart:
-        // logged in → go straight to services, not logged in → go to login
-        function handleGetStarted() {
-            if (isLoggedIn()) {
-                window.location.href = SERVICES_URL;
-            } else {
-                window.location.href = 'login.html';
-            }
-        }
-    </script>
+<!-- Simple fallback if JavaScript fails -->
+<noscript>
+    <div style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#0a1520;padding:30px;border-radius:20px;text-align:center;z-index:10000">
+        <h2 style="color:#C6A85C">Site Moved</h2>
+        <p style="color:#94A3B8">Please visit our new website:</p>
+        <a href="https://anicadetech.com" style="color:#00BFFF;font-size:18px">anicadetech.com</a>
+    </div>
+</noscript>
+
 </body>
 </html>
