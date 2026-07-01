@@ -1,379 +1,2208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ANICADE TECH | Site Relocated</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ANICADE.CV — Professional CV Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:wght@400;500;600;700&family=Merriweather:wght@400;700&family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&family=Roboto+Slab:wght@400;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --primary: #0b1c2d;
+      --panel: rgba(15, 30, 48, 0.92);
+      --panel-strong: #102237;
+      --accent: #00bfff;
+      --gold: #c6a85c;
+      --text: #f5f7fa;
+      --muted: #94a3b8;
+      --line: rgba(255, 255, 255, 0.09);
+      --field: rgba(255, 255, 255, 0.055);
+      --danger: #f97373;
+      --success: #34d399;
+    }
 
-        :root {
-            --primary: #0B1C2D;
-            --accent: #00BFFF;
-            --gold: #C6A85C;
-            --text: #F5F7FA;
-            --text-light: #94A3B8;
-            --success: #39ff14;
-            --border: rgba(255,255,255,0.07);
-            --card-bg: rgba(15, 30, 48, 0.88);
-        }
+    /* ── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(0,191,255,.16), transparent 32rem),
+        radial-gradient(circle at 78% 12%, rgba(198,168,92,.12), transparent 30rem),
+        var(--primary);
+      color: var(--text);
+      font-family: "Rajdhani", sans-serif;
+      overflow-x: hidden;
+    }
+    button, input, textarea, select { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
 
-        body {
-            background: var(--primary);
-            color: var(--text);
-            line-height: 1.6;
-            font-family: 'Rajdhani', sans-serif;
-            overflow-x: hidden;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    /* ── ANIMATED RINGS ─────────────────────────────────────── */
+    .rings-bg {
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none; overflow: hidden;
+    }
+    .rings-bg span {
+      position: absolute; top: 50%; left: 50%;
+      border: 1.5px solid transparent; border-radius: 38% 62% 63% 37%/41% 44% 56% 59%;
+    }
+    .rings-bg span:nth-child(1) {
+      width: 920px; height: 920px; margin: -460px 0 0 -460px;
+      border-color: rgba(0,191,255,.07);
+      animation: spin 28s linear infinite;
+    }
+    .rings-bg span:nth-child(2) {
+      width: 620px; height: 620px; margin: -310px 0 0 -310px;
+      border-color: rgba(198,168,92,.07);
+      animation: spinR 18s linear infinite;
+    }
+    .rings-bg span:nth-child(3) {
+      width: 410px; height: 410px; margin: -205px 0 0 -205px;
+      border-color: rgba(0,191,255,.04);
+      animation: spin 38s linear infinite reverse;
+    }
+    @keyframes spin  { to { transform: rotate(360deg);  } }
+    @keyframes spinR { to { transform: rotate(-360deg); } }
 
-        /* ===== BACKGROUND RINGS ===== */
-        .rings-bg {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
+    /* ── TOP BAR ────────────────────────────────────────────── */
+    .top-bar {
+      position: sticky; top: 0; z-index: 50;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 20px; align-items: center;
+      padding: 13px 28px;
+      background: rgba(11,28,45,.92);
+      border-bottom: 1px solid rgba(198,168,92,.18);
+      backdrop-filter: blur(18px);
+    }
+    .brand {
+      display: inline-flex; align-items: center; gap: 10px;
+      color: var(--gold);
+      font-family: "Orbitron", sans-serif;
+      font-size: 14px; font-weight: 900; letter-spacing: 1.5px;
+      text-decoration: none;
+    }
+    .brand-mark {
+      display: grid; width: 34px; height: 34px;
+      place-items: center;
+      border: 1px solid rgba(198,168,92,.45);
+      border-radius: 50%; color: var(--accent);
+      font-size: 15px; font-weight: 900;
+      box-shadow: 0 0 22px rgba(0,191,255,.16);
+    }
+    .dot { color: var(--accent); }
+    .main-tabs {
+      display: flex; justify-content: center; gap: 6px;
+    }
+    .tab-btn {
+      padding: 8px 16px; border-radius: 8px; cursor: pointer;
+      border: 1px solid rgba(255,255,255,.11);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-weight: 700; font-size: 12px;
+      letter-spacing: .6px; text-transform: uppercase;
+      transition: all .2s ease;
+    }
+    .tab-btn:hover { border-color: rgba(0,191,255,.4); color: var(--text); transform: translateY(-1px); }
+    .tab-btn.active {
+      background: rgba(0,191,255,.13);
+      border-color: rgba(0,191,255,.5);
+      color: var(--accent);
+    }
+    .site-link {
+      padding: 9px 15px; border-radius: 8px; text-decoration: none;
+      border: 1px solid rgba(255,255,255,.11);
+      background: rgba(255,255,255,.04);
+      color: var(--gold); font-weight: 700; font-size: 13px;
+      transition: all .2s ease;
+    }
+    .site-link:hover { border-color: rgba(198,168,92,.45); transform: translateY(-1px); }
 
-        .ring-el {
-            position: absolute;
-            top: 50%; left: 50%;
-            border: 1.5px solid transparent;
-            border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
-            will-change: transform;
-        }
-        .ring-el:nth-child(1) {
-            width: 860px; height: 860px;
-            margin: -430px 0 0 -430px;
-            border-color: rgba(0, 191, 255, 0.09);
-            animation: spin1 22s linear infinite;
-        }
-        .ring-el:nth-child(2) {
-            width: 620px; height: 620px;
-            margin: -310px 0 0 -310px;
-            border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
-            border-color: rgba(198, 168, 92, 0.07);
-            animation: spin2 15s linear infinite;
-        }
-        .ring-el:nth-child(3) {
-            width: 420px; height: 420px;
-            margin: -210px 0 0 -210px;
-            border-color: rgba(0, 191, 255, 0.05);
-            animation: spin1 32s linear infinite reverse;
-        }
+    /* ── MAIN / PANELS ──────────────────────────────────────── */
+    main { position: relative; z-index: 1; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
 
-        @keyframes spin1 { to { transform: rotate(360deg); } }
-        @keyframes spin2 { to { transform: rotate(-360deg); } }
+    /* ── BUILDER SHELL ──────────────────────────────────────── */
+    .app-shell {
+      display: none;
+      grid-template-columns: minmax(340px, 480px) minmax(0, 1fr);
+      min-height: calc(100vh - 62px);
+    }
+    .app-shell.active { display: grid; }
 
-        /* ===== MAIN CONTENT ===== */
-        .container {
-            position: relative;
-            z-index: 2;
-            max-width: 700px;
-            margin: 40px 20px;
-            padding: 0;
-            text-align: center;
-        }
+    /* ── CONTROL PANEL (LEFT) ───────────────────────────────── */
+    .control-panel {
+      padding: 24px;
+      border-right: 1px solid var(--line);
+      background: rgba(11,28,45,.5);
+      overflow-y: auto;
+      max-height: calc(100vh - 62px);
+    }
+    .panel-head {
+      padding: 22px; margin-bottom: 14px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.18);
+    }
+    .eyebrow {
+      margin: 0 0 7px;
+      color: var(--accent);
+      font-family: "Orbitron", sans-serif;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 2.6px; text-transform: uppercase;
+    }
+    h1, h2, h3 { margin: 0; font-family: "Orbitron", sans-serif; letter-spacing: 0; }
+    .panel-head h1 {
+      color: var(--gold); font-size: 26px; line-height: 1.1;
+    }
+    .panel-head p { color: var(--muted); line-height: 1.55; margin: 10px 0 0; }
 
-        /* ===== CARD ===== */
-        .relocation-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 50px 40px;
-            backdrop-filter: blur(4px);
-            animation: fadeUp 0.8s ease both;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-        }
+    /* progress */
+    .progress-card {
+      display: grid; gap: 10px;
+      margin-bottom: 16px; padding: 16px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+    .progress-row { display: flex; justify-content: space-between; align-items: center; }
+    .progress-card .pct {
+      color: var(--gold);
+      font-family: "Orbitron", sans-serif;
+      font-size: 22px; font-weight: 900;
+    }
+    .progress-card .plabel { color: var(--muted); font-size: 13px; font-weight: 600; }
+    .progress-track {
+      height: 6px; overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+    }
+    .progress-fill {
+      display: block; width: 0; height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--accent));
+      transition: width .3s ease;
+    }
 
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
+    /* draft banner */
+    .draft-banner {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px; padding: 14px 16px;
+      border: 1px solid rgba(0,191,255,.32);
+      border-radius: 10px;
+      background: rgba(0,191,255,.08);
+      color: var(--text); font-size: 13px; line-height: 1.5;
+    }
+    .draft-banner[hidden] { display: none; }
+    .draft-banner-actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .draft-banner-actions button {
+      padding: 7px 13px; border-radius: 7px; cursor: pointer; font-weight: 700; font-size: 12px;
+      border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.06); color: var(--text);
+      touch-action: manipulation;
+    }
+    .draft-banner-actions .restore-btn {
+      border-color: rgba(0,191,255,.45); background: rgba(0,191,255,.16); color: var(--accent);
+    }
+    .draft-banner-actions .discard-btn:hover { border-color: rgba(249,115,115,.4); color: var(--danger); }
 
-        /* ===== LOGO ===== */
-        .logo-wrap {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-        }
-        .logo-ring {
-            position: relative;
-            width: 120px; height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .logo-ring::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
-            border: 2px solid rgba(198, 168, 92, 0.5);
-            will-change: transform;
-            animation: spin1 8s linear infinite;
-        }
-        .logo-ring::after {
-            content: '';
-            position: absolute;
-            inset: 8px;
-            border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
-            border: 1.5px solid rgba(0, 191, 255, 0.4);
-            will-change: transform;
-            animation: spin2 5s linear infinite;
-        }
-        .logo-img {
-            width: 88px; height: 88px;
-            border-radius: 50%;
-            object-fit: cover;
-            position: relative;
-            z-index: 2;
-            box-shadow: 0 0 28px rgba(198, 168, 92, 0.3);
-            border: 2px solid rgba(198, 168, 92, 0.35);
-        }
+    /* form / details */
+    form { display: grid; gap: 12px; }
+    details {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    summary {
+      display: flex; align-items: center; gap: 10px;
+      padding: 0 18px; min-height: 54px;
+      color: var(--text);
+      font-family: "Orbitron", sans-serif;
+      font-size: 12px; font-weight: 700; letter-spacing: .4px;
+      cursor: pointer; list-style: none;
+      border-bottom: 1px solid transparent;
+      transition: background .15s;
+    }
+    details[open] summary {
+      border-bottom-color: var(--line);
+      background: rgba(0,191,255,.04);
+    }
+    summary::after {
+      content: "›"; margin-left: auto;
+      font-size: 18px; color: var(--muted);
+      transform: rotate(90deg);
+      transition: transform .2s ease;
+    }
+    details[open] summary::after { transform: rotate(270deg); }
+    .section-body { padding: 16px 18px 18px; }
 
-        /* ===== TYPOGRAPHY ===== */
-        .eyebrow {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 20px;
-            opacity: 0.8;
-        }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+    }
+    label {
+      display: grid; gap: 6px;
+      color: rgba(245,247,250,.82);
+      font-size: 13px; font-weight: 700;
+    }
+    label.full { grid-column: 1 / -1; }
+    .required-mark { color: var(--danger); margin-left: 2px; }
+    input, textarea, select {
+      width: 100%; min-width: 0;
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 8px;
+      background: var(--field);
+      color: var(--text);
+      padding: 11px 12px;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    textarea { resize: vertical; }
+    select option { color: #111827; }
+    input:focus, textarea:focus, select:focus {
+      border-color: rgba(0,191,255,.55);
+      box-shadow: 0 0 0 3px rgba(0,191,255,.1);
+    }
 
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 38px;
-            font-weight: 900;
-            line-height: 1.2;
-            margin-bottom: 16px;
-            letter-spacing: -1px;
-        }
-        h1 .gold { color: var(--gold); text-shadow: 0 0 28px rgba(198, 168, 92, 0.4); }
-        h1 .blue { color: var(--accent); text-shadow: 0 0 28px rgba(0, 191, 255, 0.35); }
+    /* validation */
+    .input-invalid {
+      border-color: rgba(249,115,115,.75) !important;
+      box-shadow: 0 0 0 3px rgba(249,115,115,.14) !important;
+    }
+    .field-error-msg {
+      color: var(--danger);
+      font-size: 11.5px;
+      font-weight: 600;
+      margin-top: -2px;
+    }
 
-        .message {
-            font-size: 18px;
-            color: var(--text-light);
-            margin: 20px 0 12px;
-            line-height: 1.6;
-        }
+    /* repeat sections */
+    .repeat-head {
+      display: flex; justify-content: space-between;
+      align-items: center; gap: 10px;
+      margin-bottom: 12px;
+    }
+    .repeat-head p { margin: 0; color: var(--muted); font-size: 13px; }
+    .mini-btn {
+      padding: 8px 12px; border-radius: 8px; cursor: pointer;
+      border: 1px solid rgba(198,168,92,.4);
+      background: rgba(198,168,92,.08);
+      color: var(--gold); font-weight: 800; font-size: 12px;
+      white-space: nowrap; transition: all .2s;
+      touch-action: manipulation;
+    }
+    .mini-btn:hover { background: rgba(198,168,92,.16); transform: translateY(-1px); }
+    .mini-btn:active { transform: scale(.97); }
+    .repeat-list { display: grid; gap: 12px; }
+    .repeat-item {
+      position: relative; padding: 14px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 8px;
+      background: rgba(255,255,255,.03);
+    }
+    .remove-btn {
+      position: absolute; top: 8px; right: 8px;
+      padding: 7px 10px; border-radius: 6px; cursor: pointer;
+      border: 1px solid rgba(249,115,115,.3);
+      background: rgba(249,115,115,.08);
+      color: var(--danger); font-size: 11px; font-weight: 800;
+      transition: all .2s;
+      touch-action: manipulation;
+      min-height: 30px;
+    }
+    .remove-btn:hover { background: rgba(249,115,115,.18); }
+    .remove-btn:active { transform: scale(.96); }
+    .repeat-item .form-grid { padding-top: 30px; }
 
-        .old-address {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 12px;
-            padding: 14px 20px;
-            margin: 25px 0;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 15px;
-            color: rgba(245,247,250,0.6);
-            word-break: break-all;
-        }
+    /* ai-enhance inline btn */
+    .ai-enhance-row {
+      display: flex; justify-content: flex-end; margin-top: 8px;
+      gap: 8px;
+    }
+    .ai-enhance-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 11px; border-radius: 6px; cursor: pointer;
+      border: 1px solid rgba(0,191,255,.3);
+      background: rgba(0,191,255,.07);
+      color: var(--accent); font-size: 12px; font-weight: 700;
+      transition: all .2s;
+      touch-action: manipulation;
+    }
+    .ai-enhance-btn:hover { background: rgba(0,191,255,.14); }
+    .ai-enhance-btn:active { transform: scale(.97); }
+    .ai-enhance-btn svg { flex-shrink: 0; }
+    .ai-enhance-btn[disabled] { opacity: .5; cursor: not-allowed; }
+    .spell-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 11px; border-radius: 6px; cursor: pointer;
+      border: 1px solid rgba(198,168,92,.35);
+      background: rgba(198,168,92,.07);
+      color: var(--gold); font-size: 12px; font-weight: 700;
+      transition: all .2s;
+      touch-action: manipulation;
+    }
+    .spell-btn:hover { background: rgba(198,168,92,.15); }
+    .spell-btn[disabled] { opacity: .5; cursor: not-allowed; }
 
-        .old-address span {
-            color: #ff6b6b;
-            font-family: monospace;
-            font-size: 14px;
-            display: inline-block;
-            margin-top: 8px;
-            padding: 6px 12px;
-            background: rgba(255,107,107,0.1);
-            border-radius: 8px;
-        }
+    /* ── PREVIEW PANEL (RIGHT) ──────────────────────────────── */
+    .preview-panel {
+      min-width: 0; padding: 24px;
+      overflow-y: auto;
+      max-height: calc(100vh - 62px);
+    }
+    .preview-toolbar {
+      display: flex; justify-content: space-between;
+      align-items: center; gap: 16px; flex-wrap: wrap;
+      margin-bottom: 18px; padding: 16px 20px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+    .preview-toolbar h2 { font-size: 17px; color: var(--gold); }
+    .toolbar-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+    .tool-btn {
+      padding: 9px 13px; border-radius: 8px; cursor: pointer;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.045);
+      color: var(--muted); font-weight: 800; font-size: 12px;
+      transition: all .2s;
+      touch-action: manipulation;
+      min-height: 40px;
+    }
+    .tool-btn:hover { border-color: rgba(0,191,255,.4); color: var(--text); transform: translateY(-1px); }
+    .tool-btn:active { transform: scale(.97); }
+    .tool-btn.primary {
+      background: linear-gradient(135deg, rgba(198,168,92,.22), rgba(0,191,255,.17));
+      border-color: rgba(198,168,92,.45); color: var(--gold);
+    }
+    .cv-stage {
+      display: grid; justify-content: center;
+      gap: 18px; overflow: auto;
+      padding: 8px 4px 40px;
+    }
 
-        /* ===== BUTTON ===== */
-        .visit-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            background: linear-gradient(135deg, rgba(198,168,92,0.2), rgba(0,191,255,0.15));
-            border: 1px solid rgba(198,168,92,0.5);
-            border-radius: 60px;
-            padding: 16px 36px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 14px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: var(--gold);
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 15px 0 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
+    /* ── CV DOCUMENT STYLES ─────────────────────────────────── */
+    .cv-document {
+      --cv-accent: #0f766e;
+      --cv-font: "Inter";
+      width: 210mm; min-height: 297mm;
+      color: #1a2332;
+      font-family: var(--cv-font), Arial, sans-serif;
+    }
+    .cv-page {
+      width: 210mm; min-height: 297mm;
+      margin-bottom: 20px;
+      background: #ffffff;
+      box-shadow: 0 20px 60px rgba(0,0,0,.3);
+      page-break-after: always;
+    }
+    .cv-page:last-child { page-break-after: auto; }
 
-        .visit-btn:hover {
-            transform: translateY(-3px);
-            background: linear-gradient(135deg, rgba(198,168,92,0.3), rgba(0,191,255,0.25));
-            box-shadow: 0 8px 25px rgba(198,168,92,0.2);
-            border-color: rgba(198,168,92,0.7);
-        }
+    /* MODERN template */
+    .cv-modern .cv-page {
+      display: grid;
+      grid-template-columns: 38% 62%;
+    }
+    .cv-sidebar {
+      padding: 36px 26px;
+      background: #f0f4f8;
+      border-right: 3px solid var(--cv-accent);
+    }
+    .cv-main { padding: 36px 34px; }
+    .cv-avatar {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--cv-accent);
+      display: grid; place-items: center;
+      margin-bottom: 18px;
+      font-size: 28px; font-weight: 900;
+      color: white; font-family: var(--cv-font);
+    }
+    .cv-name {
+      margin: 0 0 5px;
+      font-size: 28px; line-height: 1.1;
+      font-weight: 800; color: #111827;
+      font-family: var(--cv-font), Arial, sans-serif;
+    }
+    .cv-role {
+      margin: 0 0 20px;
+      font-size: 13px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .8px;
+      color: var(--cv-accent);
+    }
+    .cv-section { margin-bottom: 22px; break-inside: avoid; }
+    .cv-section h3 {
+      margin: 0 0 10px; padding-bottom: 5px;
+      border-bottom: 2px solid var(--cv-accent);
+      font-family: var(--cv-font), Arial, sans-serif;
+      font-size: 11px; font-weight: 800;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: #111827;
+    }
+    .cv-section p {
+      margin: 0 0 7px;
+      font-size: 12.5px; line-height: 1.6; color: #374151;
+    }
+    .cv-list {
+      display: grid; gap: 5px;
+      margin: 0; padding: 0; list-style: none;
+    }
+    .cv-list li { font-size: 12.5px; line-height: 1.45; color: #374151; }
+    .cv-main .cv-list { padding-left: 16px; list-style: disc; }
+    .cv-item { margin-bottom: 16px; }
+    .cv-item h4 {
+      margin: 0 0 3px; font-size: 14px; font-weight: 700; color: #111827;
+    }
+    .cv-item-role { font-size: 13px; font-weight: 700; color: var(--cv-accent); margin: 0 0 3px; }
+    .cv-meta { color: #6b7280; font-size: 11.5px; font-weight: 600; }
+    .cv-contact-item {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 12px; color: #4b5563; margin-bottom: 8px;
+      word-break: break-all;
+    }
+    .cv-contact-item svg { flex-shrink: 0; margin-top: 1px; }
+    .cv-skill-pill {
+      display: inline-block;
+      padding: 4px 10px; margin: 3px 3px 0 0;
+      border-radius: 4px;
+      background: var(--cv-accent);
+      color: white; font-size: 11px; font-weight: 700;
+    }
+    .cv-footer-note {
+      margin-top: 20px; padding-top: 12px;
+      border-top: 1px solid #e5e7eb;
+      color: #9ca3af; font-size: 10.5px;
+    }
 
-        .visit-btn svg {
-            transition: transform 0.2s;
-        }
+    /* CLASSIC template */
+    .cv-classic .cv-page {
+      display: block; padding: 40px 52px;
+    }
+    .cv-classic .cv-sidebar,
+    .cv-classic .cv-main {
+      padding: 0; background: transparent; border: 0;
+    }
+    .cv-classic .cv-sidebar { margin-bottom: 22px; }
+    .cv-classic .cv-name { font-size: 34px; }
+    .cv-classic .cv-section h3 {
+      font-size: 12px; letter-spacing: 1.5px;
+    }
+    .cv-classic .cv-contact-item { display: inline-flex; margin-right: 20px; }
+    .cv-classic-contacts { display: flex; flex-wrap: wrap; gap: 6px 0; margin-bottom: 18px; }
 
-        .visit-btn:hover svg {
-            transform: translateX(5px);
-        }
+    /* EXECUTIVE template */
+    .cv-executive .cv-page {
+      display: block;
+    }
+    .cv-executive .cv-header-band {
+      background: #1a2332;
+      padding: 34px 44px;
+      color: white;
+    }
+    .cv-executive .cv-sidebar {
+      background: transparent; border: 0; padding: 0;
+    }
+    .cv-executive .cv-name { color: white; font-size: 32px; }
+    .cv-executive .cv-role { color: var(--cv-accent); margin-bottom: 14px; }
+    .cv-executive .cv-contact-item { color: rgba(255,255,255,.75); }
+    .cv-executive .cv-exec-contacts { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 14px; }
+    .cv-executive .cv-body { display: grid; grid-template-columns: 34% 66%; }
+    .cv-executive .cv-sidebar-inner { padding: 28px 24px 28px 44px; background: #f7f9fb; border-right: 1px solid #e5e7eb; }
+    .cv-executive .cv-main { padding: 28px 36px 28px 28px; }
+    .cv-executive .cv-section h3 {
+      font-size: 11px; letter-spacing: 1.2px;
+      border-bottom: 2px solid var(--cv-accent);
+    }
 
-        /* ===== COUNTDOWN / REDIRECT NOTE ===== */
-        .redirect-note {
-            font-size: 12px;
-            color: rgba(148,163,184,0.5);
-            margin-top: 28px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
+    /* MINIMAL template */
+    .cv-minimal .cv-page {
+      display: block; padding: 48px 56px;
+    }
+    .cv-minimal .cv-sidebar,
+    .cv-minimal .cv-main { padding: 0; background: transparent; border: 0; }
+    .cv-minimal .cv-header { border-bottom: 1px solid #e5e7eb; padding-bottom: 22px; margin-bottom: 28px; }
+    .cv-minimal .cv-name { font-size: 36px; letter-spacing: -1px; color: #111827; }
+    .cv-minimal .cv-role { color: var(--cv-accent); margin: 6px 0 14px; }
+    .cv-minimal .cv-section h3 {
+      font-size: 10px; letter-spacing: 2px; color: #9ca3af;
+      border-bottom: 1px solid #f3f4f6; margin-bottom: 12px;
+    }
+    .cv-minimal .cv-sidebar { margin-bottom: 24px; }
+    .cv-minimal-contacts { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+    .cv-minimal .cv-contact-item { font-size: 12.5px; }
 
-        .redirect-note a {
-            color: var(--accent);
-            text-decoration: none;
-        }
+    /* ── TEMPLATE GALLERY TAB ───────────────────────────────── */
+    .gallery-panel {
+      min-height: calc(100vh - 62px);
+      padding: 36px 28px;
+    }
+    .gallery-panel .eyebrow { margin-bottom: 6px; }
+    .gallery-panel > h2 {
+      color: var(--gold); font-size: 28px; margin-bottom: 6px;
+    }
+    .gallery-panel > p { color: var(--muted); margin: 0 0 32px; line-height: 1.6; }
+    .template-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .template-card {
+      border: 2px solid var(--line);
+      border-radius: 12px; overflow: hidden;
+      background: var(--panel);
+      cursor: default; transition: all .25s;
+    }
+    .template-card:hover { border-color: rgba(0,191,255,.4); transform: translateY(-3px); }
+    .template-card.selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+    .template-thumb {
+      height: 200px; overflow: hidden;
+      background: white; position: relative;
+    }
+    .template-thumb-inner {
+      transform: scale(.38) translateX(-50%) translateY(-50%);
+      transform-origin: 0 0;
+      position: absolute; top: 50%; left: 50%;
+      width: 210mm; pointer-events: none;
+    }
+    .template-info { padding: 16px 18px; }
+    .template-name {
+      color: var(--gold);
+      font-family: "Orbitron", sans-serif;
+      font-size: 12px; font-weight: 700; margin: 0 0 5px;
+    }
+    .template-desc { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
+    .template-accents { display: flex; gap: 8px; flex-wrap: wrap; }
+    .accent-dot {
+      width: 30px; height: 30px; border-radius: 50%;
+      cursor: pointer; border: 3px solid transparent; padding: 0;
+      transition: border-color .2s, transform .15s;
+      touch-action: manipulation;
+    }
+    .accent-dot:active { transform: scale(.9); }
+    .accent-dot.active { border-color: white; box-shadow: 0 0 0 2px rgba(0,0,0,.2); }
+    .select-template-btn {
+      display: block; width: 100%;
+      margin-top: 12px; padding: 11px;
+      border-radius: 8px; cursor: pointer; text-align: center;
+      border: 1px solid rgba(0,191,255,.35);
+      background: rgba(0,191,255,.08);
+      color: var(--accent); font-weight: 800; font-size: 12px;
+      transition: all .2s;
+      touch-action: manipulation;
+      min-height: 40px;
+    }
+    .select-template-btn:hover { background: rgba(0,191,255,.18); }
+    .select-template-btn:active { transform: scale(.98); }
+    .select-template-btn.selected-state {
+      background: rgba(0,191,255,.2);
+      border-color: var(--accent);
+    }
 
-        .redirect-note a:hover {
-            text-decoration: underline;
-        }
+    /* ── RECENT TAB ─────────────────────────────────────────── */
+    .recent-panel {
+      min-height: calc(100vh - 62px);
+      padding: 36px 28px;
+    }
+    .recent-panel > h2 { color: var(--gold); margin-bottom: 6px; font-size: 26px; }
+    .recent-panel > p { color: var(--muted); margin: 0 0 24px; }
+    .recent-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 16px; }
+    .recent-card {
+      padding: 18px; border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      display: grid; gap: 10px;
+    }
+    .recent-card h4 { margin: 0; color: var(--text); font-size: 15px; }
+    .recent-card .rc-meta { color: var(--muted); font-size: 12px; }
+    .recent-actions { display: flex; gap: 8px; }
+    .rc-load-btn, .rc-del-btn {
+      flex: 1; padding: 9px; border-radius: 7px; cursor: pointer;
+      font-size: 12px; font-weight: 700; border: 1px solid;
+      transition: all .2s;
+      touch-action: manipulation;
+      min-height: 38px;
+    }
+    .rc-load-btn {
+      border-color: rgba(0,191,255,.35);
+      background: rgba(0,191,255,.07); color: var(--accent);
+    }
+    .rc-load-btn:hover { background: rgba(0,191,255,.18); }
+    .rc-del-btn {
+      border-color: rgba(249,115,115,.3);
+      background: rgba(249,115,115,.07); color: var(--danger);
+    }
+    .rc-del-btn:hover { background: rgba(249,115,115,.18); }
+    .save-row { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .save-name-input {
+      flex: 1; min-width: 180px; padding: 10px 13px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.11);
+      background: var(--field); color: var(--text); outline: none;
+    }
+    .save-name-input:focus { border-color: rgba(0,191,255,.55); }
+    .save-cv-btn {
+      padding: 10px 18px; border-radius: 8px; cursor: pointer;
+      border: 1px solid rgba(198,168,92,.4);
+      background: rgba(198,168,92,.1); color: var(--gold);
+      font-weight: 800; font-size: 13px; transition: all .2s;
+      touch-action: manipulation;
+      min-height: 42px;
+    }
+    .save-cv-btn:hover { background: rgba(198,168,92,.2); }
+    .empty-recent {
+      padding: 40px; text-align: center;
+      border: 1px dashed rgba(255,255,255,.12);
+      border-radius: 12px; color: var(--muted);
+    }
+    .storage-warning {
+      padding: 14px 16px; margin-bottom: 18px;
+      border: 1px solid rgba(249,115,115,.3);
+      border-radius: 10px;
+      background: rgba(249,115,115,.08);
+      color: var(--text); font-size: 13px; line-height: 1.6;
+    }
+    .storage-warning[hidden] { display: none; }
 
-        /* ===== FOOTER ===== */
-        .footer-note {
-            margin-top: 30px;
-            font-size: 12px;
-            color: rgba(148,163,184,0.4);
-            text-align: center;
-        }
+    /* ── LEGAL TAB ──────────────────────────────────────────── */
+    .legal-panel {
+      min-height: calc(100vh - 62px);
+      padding: 48px 24px;
+      justify-content: center;
+    }
+    .legal-panel.active {
+      display: flex;
+    }
+    .legal-card {
+      width: min(820px,100%); padding: 36px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.18);
+    }
+    .legal-card h2 { color: var(--gold); font-size: 22px; margin-bottom: 12px; }
+    .legal-card h2:not(:first-of-type) { margin-top: 28px; }
+    .legal-card p { color: var(--muted); line-height: 1.7; margin: 0 0 12px; }
+    .legal-card a { color: var(--accent); }
 
-        /* ===== MOBILE ===== */
-        @media (max-width: 600px) {
-            .relocation-card { padding: 35px 25px; }
-            h1 { font-size: 28px; }
-            .message { font-size: 15px; }
-            .visit-btn { padding: 12px 28px; font-size: 12px; }
-            .old-address span { font-size: 11px; }
-            .ring-el:nth-child(1) { width: 480px; height: 480px; margin: -240px 0 0 -240px; }
-            .ring-el:nth-child(2) { width: 360px; height: 360px; margin: -180px 0 0 -180px; }
-            .ring-el:nth-child(3) { width: 250px; height: 250px; margin: -125px 0 0 -125px; }
-        }
-    </style>
+    /* ── AI ASSISTANT ───────────────────────────────────────── */
+    .ai-fab {
+      position: fixed; bottom: 28px; right: 28px; z-index: 100;
+      width: 56px; height: 56px; border-radius: 50%;
+      border: 2px solid rgba(0,191,255,.5);
+      background: linear-gradient(135deg, rgba(0,191,255,.2), rgba(198,168,92,.15));
+      color: var(--accent); cursor: pointer;
+      display: grid; place-items: center;
+      box-shadow: 0 8px 32px rgba(0,191,255,.25);
+      transition: all .25s;
+      backdrop-filter: blur(12px);
+      touch-action: manipulation;
+    }
+    .ai-fab:hover { transform: scale(1.1); box-shadow: 0 12px 40px rgba(0,191,255,.35); }
+    .ai-fab:active { transform: scale(.95); }
+    .ai-panel {
+      position: fixed; bottom: 96px; right: 28px; z-index: 99;
+      width: min(420px, calc(100vw - 40px));
+      border: 1px solid rgba(0,191,255,.25);
+      border-radius: 14px;
+      background: rgba(10,22,36,.97);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 24px 70px rgba(0,0,0,.4);
+      display: none; flex-direction: column;
+      overflow: hidden;
+      max-height: 500px;
+    }
+    .ai-panel.open { display: flex; }
+    .ai-panel-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(0,191,255,.15);
+      background: rgba(0,191,255,.06);
+    }
+    .ai-panel-head h3 {
+      margin: 0; font-size: 13px; font-weight: 700;
+      color: var(--accent); font-family: "Orbitron", sans-serif;
+    }
+    .ai-status {
+      font-size: 10px; font-weight: 700; letter-spacing: .5px;
+      color: var(--muted); text-transform: uppercase;
+    }
+    .ai-status.online { color: var(--success); }
+    .ai-status.offline { color: var(--danger); }
+    .ai-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 18px; padding: 6px 8px;
+      transition: color .2s;
+      touch-action: manipulation;
+    }
+    .ai-close:hover { color: var(--text); }
+    .ai-messages {
+      flex: 1; overflow-y: auto; padding: 14px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .ai-msg {
+      max-width: 88%; padding: 10px 13px;
+      border-radius: 10px; font-size: 13px; line-height: 1.55;
+      white-space: pre-wrap;
+    }
+    .ai-msg.user {
+      align-self: flex-end;
+      background: rgba(0,191,255,.16);
+      border: 1px solid rgba(0,191,255,.25);
+      color: var(--text);
+    }
+    .ai-msg.ai {
+      align-self: flex-start;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      color: var(--text);
+    }
+    .ai-msg.ai.loading { color: var(--muted); font-style: italic; }
+    .ai-suggestions {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      padding: 0 14px 10px;
+    }
+    .ai-suggestion-chip {
+      padding: 6px 10px; border-radius: 999px; cursor: pointer;
+      border: 1px solid rgba(0,191,255,.25);
+      background: rgba(0,191,255,.06);
+      color: var(--accent); font-size: 11px; font-weight: 700;
+      touch-action: manipulation;
+    }
+    .ai-suggestion-chip:hover { background: rgba(0,191,255,.14); }
+    .ai-input-row {
+      display: flex; gap: 8px; padding: 12px;
+      border-top: 1px solid rgba(0,191,255,.12);
+    }
+    .ai-input {
+      flex: 1; padding: 9px 12px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text); outline: none; font-size: 13px;
+      transition: border-color .2s;
+    }
+    .ai-input:focus { border-color: rgba(0,191,255,.5); }
+    .ai-send {
+      padding: 9px 14px; border-radius: 8px; cursor: pointer;
+      border: 1px solid rgba(0,191,255,.4);
+      background: rgba(0,191,255,.14);
+      color: var(--accent); font-weight: 800; font-size: 13px;
+      transition: all .2s;
+      touch-action: manipulation;
+    }
+    .ai-send:hover { background: rgba(0,191,255,.24); }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 90px; left: 50%; z-index: 200;
+      transform: translateX(-50%) translateY(20px);
+      padding: 10px 20px; border-radius: 8px;
+      background: rgba(10,22,36,.95);
+      border: 1px solid rgba(0,191,255,.3);
+      color: var(--text); font-size: 13px; font-weight: 700;
+      opacity: 0; transition: all .25s;
+      pointer-events: none;
+      max-width: calc(100vw - 40px);
+      text-align: center;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── PROMO / AD OVERLAY ─────────────────────────────────── */
+    .promo-overlay {
+      position: fixed; inset: 0; z-index: 500;
+      display: none; align-items: center; justify-content: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at top left, rgba(0,191,255,.22), transparent 34rem),
+        radial-gradient(circle at 80% 20%, rgba(198,168,92,.18), transparent 30rem),
+        rgba(4,10,18,.97);
+      backdrop-filter: blur(6px);
+      cursor: pointer;
+    }
+    .promo-overlay.open { display: flex; }
+    .promo-card {
+      position: relative;
+      width: min(520px, 100%);
+      padding: 40px 32px 32px;
+      border: 1px solid rgba(198,168,92,.35);
+      border-radius: 18px;
+      background: var(--panel-strong);
+      box-shadow: 0 30px 90px rgba(0,0,0,.55);
+      text-align: center;
+      cursor: default;
+    }
+    .promo-close {
+      position: absolute; top: 14px; right: 14px;
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.06);
+      color: var(--muted); cursor: pointer;
+      font-size: 15px; display: grid; place-items: center;
+      touch-action: manipulation;
+    }
+    .promo-close:hover { color: var(--text); }
+    .promo-logo {
+      width: 76px; height: 76px; border-radius: 20px;
+      object-fit: cover; margin: 0 auto 16px;
+      border: 1px solid rgba(198,168,92,.4);
+      box-shadow: 0 0 30px rgba(0,191,255,.25);
+    }
+    .promo-eyebrow {
+      color: var(--accent); font-family: "Orbitron", sans-serif;
+      font-size: 10px; font-weight: 700; letter-spacing: 2.4px;
+      text-transform: uppercase; margin: 0 0 8px;
+    }
+    .promo-title {
+      font-family: "Orbitron", sans-serif; color: var(--gold);
+      font-size: 22px; margin: 0 0 10px;
+    }
+    .promo-sub { color: var(--muted); font-size: 13.5px; line-height: 1.6; margin: 0 0 22px; }
+    .promo-services {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+      margin: 0 0 26px; text-align: left;
+    }
+    .promo-service {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 12px; border-radius: 9px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      color: var(--text); font-size: 12px; font-weight: 700;
+    }
+    .promo-service svg { flex-shrink: 0; color: var(--accent); }
+    .promo-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 26px; border-radius: 9px; cursor: pointer;
+      border: none; text-decoration: none;
+      background: linear-gradient(135deg, var(--gold), var(--accent));
+      color: #0b1c2d; font-weight: 900; font-size: 13px;
+      letter-spacing: .3px;
+      touch-action: manipulation;
+    }
+    .promo-timer {
+      margin-top: 16px; height: 3px; border-radius: 999px;
+      background: rgba(255,255,255,.08); overflow: hidden;
+    }
+    .promo-timer-fill {
+      display: block; height: 100%; width: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--accent));
+      transform-origin: left; animation: promo-countdown 5s linear forwards;
+    }
+    @keyframes promo-countdown { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+
+    /* ── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 1180px) {
+      .app-shell.active { grid-template-columns: 1fr; }
+      .control-panel { border-right: 0; border-bottom: 1px solid var(--line); max-height: none; }
+      .preview-panel { max-height: none; }
+    }
+    @media (max-width: 760px) {
+      .top-bar { grid-template-columns: 1fr; gap: 10px; padding: 12px 14px; }
+      .main-tabs { justify-content: stretch; }
+      .tab-btn { flex: 1; padding: 10px 4px; font-size: 10px; min-height: 40px; }
+      .site-link { justify-self: start; }
+      .control-panel, .preview-panel { padding: 14px; }
+      .panel-head h1 { font-size: 20px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .preview-toolbar { flex-direction: column; align-items: stretch; }
+      .toolbar-actions { justify-content: stretch; }
+      .tool-btn { flex: 1; text-align: center; }
+      .cv-stage { justify-content: start; padding-bottom: 100px; }
+      .cv-document, .cv-page { width: 794px; }
+      .draft-banner { flex-direction: column; align-items: stretch; }
+      .draft-banner-actions { justify-content: stretch; }
+      .draft-banner-actions button { flex: 1; }
+      .ai-fab { bottom: calc(16px + env(safe-area-inset-bottom, 0px)); right: 16px; }
+      .ai-panel { right: 16px; left: 16px; width: auto; bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+      .promo-services { grid-template-columns: 1fr; }
+      .promo-card { padding: 32px 20px 24px; }
+    }
+
+    /* ── PRINT ──────────────────────────────────────────────── */
+    @media print {
+      body { background: #fff; }
+      .top-bar, .control-panel, .preview-toolbar, .rings-bg,
+      .ai-fab, .ai-panel, .toast, .gallery-panel, .recent-panel, .legal-panel, .draft-banner, .promo-overlay { display: none !important; }
+      .app-shell, .app-shell.active, .preview-panel, .cv-stage {
+        display: block !important; padding: 0; margin: 0;
+        max-height: none; overflow: visible;
+      }
+      .cv-document, .cv-page { width: 210mm; }
+      .cv-page { margin: 0; box-shadow: none; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="rings-bg">
-    <div class="ring-el"></div>
-    <div class="ring-el"></div>
-    <div class="ring-el"></div>
-</div>
+<div class="rings-bg" aria-hidden="true"><span></span><span></span><span></span></div>
 
-<div class="container">
-    <div class="relocation-card">
-        
-        <div class="logo-wrap">
-            <div class="logo-ring">
-                <img src="https://i.imgur.com/RcBmjWM.png" alt="ANICADE TECH Logo" class="logo-img">
+<header class="top-bar">
+  <a class="brand" href="https://tresforwrld.github.io/ANICADETECH.CV/" target="_blank" rel="noreferrer">
+    <span class="brand-mark">A</span>
+    <span>ANICADE<span class="dot">.</span>CV</span>
+  </a>
+  <nav class="main-tabs" aria-label="Application sections">
+    <button class="tab-btn active" type="button" data-tab="builder">Builder</button>
+    <button class="tab-btn" type="button" data-tab="templates">Templates</button>
+    <button class="tab-btn" type="button" data-tab="recent">Recent</button>
+    <button class="tab-btn" type="button" data-tab="legal">Terms</button>
+  </nav>
+  <a class="site-link" href="https://www.anicadetech.xyz" target="_blank" rel="noreferrer">Anicade Tech</a>
+</header>
+
+<main>
+
+  <!-- ── BUILDER ───────────────────────────────────────────── -->
+  <section class="app-shell tab-panel active" id="builder-panel">
+    <aside class="control-panel" aria-label="CV form">
+      <div class="panel-head">
+        <p class="eyebrow">Professional CV Generator</p>
+        <h1>Build a job-ready CV</h1>
+        <p>Fill in your details, pick a template and export a polished multi-page CV instantly.</p>
+      </div>
+
+      <div class="draft-banner" id="draft-banner" hidden>
+        <span id="draft-banner-text">Welcome back — your last draft was restored automatically.</span>
+        <div class="draft-banner-actions">
+          <button type="button" class="discard-btn" id="discard-draft-btn">Start fresh</button>
+        </div>
+      </div>
+
+      <div class="progress-card">
+        <div class="progress-row">
+          <span class="pct" id="completion-label">0%</span>
+          <span class="plabel">CV completion</span>
+        </div>
+        <div class="progress-track">
+          <span class="progress-fill" id="completion-bar"></span>
+        </div>
+      </div>
+      <form id="cv-form">
+
+        <details open>
+          <summary>
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            Personal Information
+          </summary>
+          <div class="section-body">
+            <div class="form-grid">
+              <label>Full name<span class="required-mark">*</span> <input name="fullName" placeholder="e.g. Mutale Chanda" required spellcheck="true"></label>
+              <label>Target role<span class="required-mark">*</span> <input name="targetRole" placeholder="e.g. Software Developer" required spellcheck="true"></label>
+              <label>Email <input name="email" type="email" placeholder="you@example.com" inputmode="email" autocomplete="email"></label>
+              <label>Phone <input name="phone" placeholder="+260 777 000 000" inputmode="tel" autocomplete="tel"></label>
+              <label>Location <input name="location" placeholder="Lusaka, Zambia" spellcheck="true"></label>
+              <label>Portfolio / LinkedIn <input name="portfolio" placeholder="https://linkedin.com/in/you"></label>
             </div>
+          </div>
+        </details>
+
+        <details open>
+          <summary>
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            Professional Profile
+          </summary>
+          <div class="section-body">
+            <label class="full">Summary
+              <textarea name="summary" rows="5" placeholder="A concise career summary showing your experience, strengths and the value you bring." spellcheck="true"></textarea>
+            </label>
+            <div class="ai-enhance-row">
+              <button type="button" class="spell-btn" data-field="summary">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+                Spell Check
+              </button>
+              <button type="button" class="ai-enhance-btn" data-field="summary">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+                AI Enhance
+              </button>
+            </div>
+            <label class="full" style="margin-top:12px">Key skills
+              <textarea name="skills" rows="3" placeholder="Project management, customer support, Excel, sales, web development" spellcheck="true"></textarea>
+            </label>
+          </div>
+        </details>
+
+        <details open>
+          <summary>
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+            Work Experience
+          </summary>
+          <div class="section-body">
+            <div class="repeat-head">
+              <p>Add roles. Include measurable results where possible.</p>
+              <button class="mini-btn" type="button" data-add="experience">+ Add role</button>
+            </div>
+            <div id="experience-list" class="repeat-list"></div>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            Education
+          </summary>
+          <div class="section-body">
+            <div class="repeat-head">
+              <p>Add qualifications and institutions.</p>
+              <button class="mini-btn" type="button" data-add="education">+ Add education</button>
+            </div>
+            <div id="education-list" class="repeat-list"></div>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+            Projects, Certs & Awards
+          </summary>
+          <div class="section-body">
+            <label class="full">Projects
+              <textarea name="projects" rows="4" placeholder="Project name — what you built, tools used, outcome." spellcheck="true"></textarea>
+            </label>
+            <div class="ai-enhance-row">
+              <button type="button" class="spell-btn" data-field="projects">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+                Spell Check
+              </button>
+              <button type="button" class="ai-enhance-btn" data-field="projects">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+                AI Enhance
+              </button>
+            </div>
+            <label class="full" style="margin-top:12px">Certifications
+              <textarea name="certifications" rows="3" placeholder="Certificate name, provider, year" spellcheck="true"></textarea>
+            </label>
+            <label class="full" style="margin-top:12px">Awards or achievements
+              <textarea name="awards" rows="3" placeholder="Employee of the month, sales target exceeded, competition winner" spellcheck="true"></textarea>
+            </label>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+            Extra Information
+          </summary>
+          <div class="section-body">
+            <div class="form-grid">
+              <label>Languages <input name="languages" placeholder="English, Bemba, Nyanja"></label>
+              <label>Availability <input name="availability" placeholder="Immediately / 2 weeks notice"></label>
+              <label>References <input name="references" placeholder="Available on request"></label>
+              <label>Nationality <input name="nationality" placeholder="Zambian"></label>
+            </div>
+          </div>
+        </details>
+
+      </form>
+    </aside>
+
+    <section class="preview-panel" aria-label="CV preview">
+      <div class="preview-toolbar">
+        <div>
+          <p class="eyebrow">Live Preview</p>
+          <h2 id="preview-title">Your CV is taking shape</h2>
         </div>
-
-        <div class="eyebrow">WE'VE MOVED!</div>
-        
-        <h1>
-            <span class="gold">ANICADE TECH</span><br>
-            <span class="blue">Has Relocated</span>
-        </h1>
-        
-        <p class="message">
-            Our website has moved to a new home.<br>
-            The old address is no longer available.
-        </p>
-
-        <div class="old-address">
-            ⚠️ Old site address (no longer active):
-            <span id="oldUrl">https://tresforwrld.github.io/ANICADEtech.net/</span>
+        <div class="toolbar-actions">
+          <button type="button" class="tool-btn" id="sample-button">Sample data</button>
+          <button type="button" class="tool-btn" id="clear-button">Clear</button>
+          <button type="button" class="tool-btn" id="html-button">Export HTML</button>
+          <button type="button" class="tool-btn primary" id="print-button">Print / PDF</button>
         </div>
+      </div>
+      <div class="cv-stage">
+        <article id="cv-preview" class="cv-document cv-modern"></article>
+      </div>
+    </section>
+  </section>
 
-        <a href="#" id="newSiteLink" class="visit-btn">
-            Visit New Website
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <line x1="5" y1="12" x2="19" y2="12"/>
-                <polyline points="12 5 19 12 12 19"/>
-            </svg>
-        </a>
+  <!-- ── TEMPLATES ─────────────────────────────────────────── -->
+  <section class="tab-panel gallery-panel" id="templates-panel">
+    <p class="eyebrow">CV Templates</p>
+    <h2>Choose your look</h2>
+    <p>Select a template style and accent colour, then head to the Builder to fill in your details.</p>
+    <div class="template-grid" id="template-grid"></div>
+  </section>
 
-        <div class="redirect-note">
-            ⏳ You will be redirected automatically in <strong id="countdown">10</strong> seconds<br>
-            or <a href="https://anicadetech.xyz" id="redirectLink">click here to go now</a>
-        </div>
-
+  <!-- ── RECENT ────────────────────────────────────────────── -->
+  <section class="tab-panel recent-panel" id="recent-panel">
+    <p class="eyebrow">Saved CVs</p>
+    <h2>Recent CVs</h2>
+    <p>Save your current CV data by name and reload it any time — stored locally in your browser. Your in-progress CV is also auto-saved on this device as you type and restored automatically when you come back.</p>
+    <div class="storage-warning" id="storage-warning" hidden>
+      Your browser is blocking local storage (this can happen in private/incognito mode). Auto-save and named saves won't persist between visits — export your CV as HTML when you're done to avoid losing work.
     </div>
-
-    <div class="footer-note">
-        ANICADE TECH — Professional Tech Solutions
+    <div class="save-row">
+      <input class="save-name-input" id="save-name-input" placeholder="Give this CV a name…">
+      <button class="save-cv-btn" id="save-cv-btn">Save current CV</button>
     </div>
+    <div class="recent-grid" id="recent-grid"></div>
+  </section>
+
+  <!-- ── LEGAL ─────────────────────────────────────────────── -->
+  <section class="tab-panel legal-panel" id="legal-panel">
+    <div class="legal-card">
+      <p class="eyebrow">Anicade CV Generator</p>
+      <h2>Terms of Use</h2>
+      <p>This tool helps users create CV documents from the information they provide. Users are responsible for ensuring that all content is truthful, accurate and appropriate for job applications.</p>
+      <p>The generator is provided for convenience and does not guarantee employment, interview selection or recruiter approval. Always review the generated CV before sending it to employers.</p>
+      <p>ANICADE Tech branding belongs to ANICADE Tech. Visit <a href="https://www.anicadetech.xyz" target="_blank" rel="noreferrer">www.anicadetech.xyz</a> for company information.</p>
+      <h2>Privacy Policy</h2>
+      <p>All CV information is processed entirely in your browser. The Recent CVs and auto-save draft features use your browser's localStorage — data stays on your device and is never uploaded to ANICADE Tech servers.</p>
+      <p>Do not enter sensitive information not needed for a job application, such as passwords, bank details or national identity numbers.</p>
+      <h2>AI Assistant</h2>
+      <p>The AI Assistant and AI Enhance features use free, publicly available text-generation and language-checking services to help polish your CV text, plus a built-in offline knowledge base of common CV questions. Do not include passwords or highly sensitive personal data in AI-enhanced fields, since some requests are sent to third-party services over the network.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- AI FAB + PANEL -->
+<button class="ai-fab" id="ai-fab" aria-label="Open AI Assistant" title="AI Writing Assistant">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
+  </svg>
+</button>
+<div class="ai-panel" id="ai-panel">
+  <div class="ai-panel-head">
+    <h3>ANICADE AI — Writing Assistant</h3>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span class="ai-status" id="ai-status">checking…</span>
+      <button class="ai-close" id="ai-close" aria-label="Close AI Assistant">✕</button>
+    </div>
+  </div>
+  <div class="ai-messages" id="ai-messages">
+    <div class="ai-msg ai">Hey! I'm your CV writing assistant. Ask me to improve your summary, suggest bullet points, tailor your CV for a specific role, or anything else about job applications.</div>
+  </div>
+  <div class="ai-suggestions" id="ai-suggestions"></div>
+  <div class="ai-input-row">
+    <input class="ai-input" id="ai-input" placeholder="Ask me anything about your CV…" autocomplete="off">
+    <button class="ai-send" id="ai-send">Send</button>
+  </div>
 </div>
 
-<script>
-    // ============================================================
-    // UPDATE THIS URL TO YOUR NEW WEBSITE ADDRESS
-    // ============================================================
-    const NEW_SITE_URL = "https://anicadetech.xyz";  // <-- CHANGE THIS TO YOUR NEW DOMAIN
-    
-    // Display the old URL (can also be customized)
-    const OLD_SITE_URL = "https://tresforwrld.github.io/ANICADEtech.net/";
-    
-    // ============================================================
-    
-    // Set the old URL display
-    document.getElementById('oldUrl').textContent = OLD_SITE_URL;
-    
-    // Set all links to the new site
-    const allLinks = document.querySelectorAll('#newSiteLink, #redirectLink');
-    allLinks.forEach(link => {
-        link.href = NEW_SITE_URL;
-    });
-    
-    // Auto-redirect countdown
-    let secondsLeft = 10;
-    const countdownEl = document.getElementById('countdown');
-    
-    const countdownInterval = setInterval(() => {
-        secondsLeft--;
-        if (countdownEl) {
-            countdownEl.textContent = secondsLeft;
-        }
-        
-        if (secondsLeft <= 0) {
-            clearInterval(countdownInterval);
-            window.location.href = NEW_SITE_URL;
-        }
-    }, 1000);
-    
-    // Optional: Pause countdown if user clicks the button (they'll navigate away anyway)
-    // But no need to interfere - they'll leave the page.
-    
-    // Smooth fade-in for the card (already handled by CSS)
-    
-    // For debugging - log the new site URL
-    console.log('Redirecting to:', NEW_SITE_URL);
-</script>
-
-<!-- Simple fallback if JavaScript fails -->
-<noscript>
-    <div style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#0a1520;padding:30px;border-radius:20px;text-align:center;z-index:10000">
-        <h2 style="color:#C6A85C">!Site Moved</h2>
-        <p style="color:#94A3B8">Please visit our new website:</p>
-        <a href="https://anicadetech.com" style="color:#00BFFF;font-size:18px">anicadetech.com</a>
+<!-- PROMO OVERLAY -->
+<div class="promo-overlay" id="promo-overlay">
+  <div class="promo-card" id="promo-card">
+    <button class="promo-close" id="promo-close" aria-label="Close ad">✕</button>
+    <img class="promo-logo" src="https://i.imgur.com/RcBmjWM.png" alt="ANICADE Tech logo">
+    <p class="promo-eyebrow">ANICADE Tech</p>
+    <h2 class="promo-title">Need more than a CV?</h2>
+    <p class="promo-sub">ANICADE Tech builds the websites, apps and digital tools behind your next opportunity. Full-stack development, done in Zambia, for clients everywhere.</p>
+    <div class="promo-services">
+      <div class="promo-service"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg> Web & App Development</div>
+      <div class="promo-service"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg> AI-Powered Tools</div>
+      <div class="promo-service"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg> Business Portals & Admin Systems</div>
+      <div class="promo-service"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg> Streaming & Content Platforms</div>
+      <div class="promo-service"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M4 9h16"/></svg> Branding & UI/UX Design</div>
+      <div class="promo-service"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Hosting, Domains & Maintenance</div>
     </div>
-</noscript>
+    <a class="promo-cta" id="promo-cta" href="https://www.anicadetech.xyz" target="_blank" rel="noreferrer">
+      Visit anicadetech.xyz
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M8 7h9v9"/></svg>
+    </a>
+    <div class="promo-timer"><span class="promo-timer-fill" id="promo-timer-fill"></span></div>
+  </div>
+</div>
 
+<div class="toast" id="toast"></div>
+
+<!-- TEMPLATES -->
+<template id="experience-template">
+  <div class="repeat-item" data-kind="experience">
+    <button class="remove-btn" type="button" aria-label="Remove role">Remove</button>
+    <div class="form-grid">
+      <label>Job title <input data-field="role" placeholder="Sales Assistant" spellcheck="true"></label>
+      <label>Company <input data-field="company" placeholder="ABC Ltd"></label>
+      <label>Dates <input data-field="dates" placeholder="Jan 2022 – Present"></label>
+      <label>Location <input data-field="place" placeholder="Kabwe, Zambia"></label>
+    </div>
+    <label class="full" style="margin-top:10px">Responsibilities & achievements
+      <textarea data-field="details" rows="4" placeholder="Managed customer enquiries&#10;Improved monthly sales by 18%&#10;Prepared reports and coordinated stock records" spellcheck="true"></textarea>
+    </label>
+    <div class="ai-enhance-row">
+      <button type="button" class="spell-btn" data-repeat-field="details">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+        Spell Check
+      </button>
+      <button type="button" class="ai-enhance-btn" data-repeat-field="details">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+        AI Enhance bullet points
+      </button>
+    </div>
+  </div>
+</template>
+
+<template id="education-template">
+  <div class="repeat-item" data-kind="education">
+    <button class="remove-btn" type="button" aria-label="Remove education">Remove</button>
+    <div class="form-grid">
+      <label>Qualification <input data-field="qualification" placeholder="Diploma in Business Administration" spellcheck="true"></label>
+      <label>Institution <input data-field="institution" placeholder="University or college name"></label>
+      <label>Dates <input data-field="dates" placeholder="2019 – 2021"></label>
+      <label>Location <input data-field="place" placeholder="Lusaka, Zambia"></label>
+    </div>
+    <label class="full" style="margin-top:10px">Notes
+      <textarea data-field="notes" rows="3" placeholder="Relevant modules, distinctions, research, leadership roles" spellcheck="true"></textarea>
+    </label>
+  </div>
+</template>
+
+<script src="ai-logic.js"></script>
+<script>
+/* ════════════════════════════════════════════════════════════
+   ANICADE.CV — app.js (inlined)
+   ════════════════════════════════════════════════════════════ */
+
+/* ── TEMPLATE DEFINITIONS ─────────────────────────────────── */
+const TEMPLATES = [
+  {
+    id: "modern",
+    name: "Modern Two-Column",
+    desc: "Clean sidebar layout with skills pills and accent colours. Great for creative and tech roles.",
+    class: "cv-modern",
+    accents: [
+      { label: "Teal",     hex: "#0f766e" },
+      { label: "Blue",     hex: "#1d4ed8" },
+      { label: "Copper",   hex: "#7c2d12" },
+      { label: "Graphite", hex: "#374151" },
+    ]
+  },
+  {
+    id: "classic",
+    name: "Classic Single-Column",
+    desc: "Traditional single-column format. Universally accepted across industries.",
+    class: "cv-classic",
+    accents: [
+      { label: "Navy",     hex: "#1e3a5f" },
+      { label: "Teal",     hex: "#0f766e" },
+      { label: "Graphite", hex: "#374151" },
+      { label: "Plum",     hex: "#6b21a8" },
+    ]
+  },
+  {
+    id: "executive",
+    name: "Executive",
+    desc: "Dark header band with a commanding presence. Perfect for senior and leadership roles.",
+    class: "cv-executive",
+    accents: [
+      { label: "Gold",     hex: "#b45309" },
+      { label: "Teal",     hex: "#0f766e" },
+      { label: "Blue",     hex: "#1d4ed8" },
+      { label: "Rose",     hex: "#9f1239" },
+    ]
+  },
+  {
+    id: "minimal",
+    name: "Minimal",
+    desc: "Ultra-clean design with hairline rules. Lets your content do the talking.",
+    class: "cv-minimal",
+    accents: [
+      { label: "Teal",     hex: "#0f766e" },
+      { label: "Slate",    hex: "#475569" },
+      { label: "Indigo",   hex: "#3730a3" },
+      { label: "Rose",     hex: "#9f1239" },
+    ]
+  }
+];
+
+let currentTemplate = TEMPLATES[0];
+let currentAccent = TEMPLATES[0].accents[0].hex;
+
+/* ── STORAGE HELPERS ──────────────────────────────────────── */
+const DRAFT_KEY = "anicade_cv_draft_v1";
+
+function storageAvailable() {
+  try {
+    const t = "__anicade_test__";
+    window.localStorage.setItem(t, "1");
+    window.localStorage.removeItem(t);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+const STORAGE_OK = storageAvailable();
+
+function safeGetItem(key) {
+  if (!STORAGE_OK) return null;
+  try { return localStorage.getItem(key); } catch { return null; }
+}
+function safeSetItem(key, value) {
+  if (!STORAGE_OK) return false;
+  try { localStorage.setItem(key, value); return true; } catch { return false; }
+}
+function safeRemoveItem(key) {
+  if (!STORAGE_OK) return;
+  try { localStorage.removeItem(key); } catch { /* ignore */ }
+}
+
+/* ── TAB SWITCHING ────────────────────────────────────────── */
+document.querySelectorAll(".tab-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const tab = btn.dataset.tab;
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+    btn.classList.add("active");
+    const panel = document.getElementById(tab + "-panel");
+    if (panel) panel.classList.add("active");
+    if (tab === "recent") renderRecent();
+    if (tab === "templates") buildGallery();
+  });
+});
+
+/* ── REPEAT ITEMS ─────────────────────────────────────────── */
+document.querySelectorAll("[data-add]").forEach(btn => {
+  btn.addEventListener("click", () => addRepeat(btn.dataset.add));
+});
+
+function addRepeat(kind) {
+  const tpl = document.getElementById(kind + "-template");
+  const clone = tpl.content.cloneNode(true);
+  const item = clone.querySelector(".repeat-item");
+  item.querySelector(".remove-btn").addEventListener("click", () => {
+    item.remove(); updatePreview();
+  });
+  const aiBtn = item.querySelector("[data-repeat-field].ai-enhance-btn");
+  if (aiBtn) {
+    aiBtn.addEventListener("click", () => {
+      const field = aiBtn.dataset.repeatField;
+      const ta = item.querySelector("[data-field='" + field + "']");
+      aiEnhanceField(ta, "bullet points for a CV work experience entry");
+    });
+  }
+  const spellBtn = item.querySelector("[data-repeat-field].spell-btn");
+  if (spellBtn) {
+    spellBtn.addEventListener("click", () => {
+      const field = spellBtn.dataset.repeatField;
+      const ta = item.querySelector("[data-field='" + field + "']");
+      runSpellCheck(ta, spellBtn);
+    });
+  }
+  item.querySelectorAll("input, textarea").forEach(el => {
+    el.addEventListener("input", updatePreview);
+  });
+  document.getElementById(kind + "-list").appendChild(item);
+}
+
+/* ── PROGRESS METER ───────────────────────────────────────── */
+const TRACKED = ["fullName","targetRole","email","phone","location","summary","skills"];
+function updateCompletion() {
+  const form = document.getElementById("cv-form");
+  let filled = 0;
+  TRACKED.forEach(n => {
+    const el = form.elements[n];
+    if (el && el.value.trim()) filled++;
+  });
+  const expItems = document.querySelectorAll("#experience-list .repeat-item");
+  if (expItems.length > 0) filled++;
+  const pct = Math.round((filled / (TRACKED.length + 1)) * 100);
+  document.getElementById("completion-label").textContent = pct + "%";
+  document.getElementById("completion-bar").style.width = pct + "%";
+}
+
+/* ── FIELD VALIDATION ─────────────────────────────────────── */
+function isValidEmail(v) {
+  if (!v) return true; // optional field
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+}
+function isValidPhone(v) {
+  if (!v) return true; // optional field
+  return /^[+()0-9][0-9\s().-]{6,}$/.test(v);
+}
+function setFieldError(input, message) {
+  clearFieldError(input);
+  if (!message) return;
+  input.classList.add("input-invalid");
+  const msg = document.createElement("span");
+  msg.className = "field-error-msg";
+  msg.textContent = message;
+  input.insertAdjacentElement("afterend", msg);
+}
+function clearFieldError(input) {
+  input.classList.remove("input-invalid");
+  const next = input.nextElementSibling;
+  if (next && next.classList && next.classList.contains("field-error-msg")) next.remove();
+}
+function attachValidation() {
+  const emailInput = document.querySelector('[name="email"]');
+  if (emailInput) {
+    emailInput.addEventListener("blur", () => {
+      setFieldError(emailInput, isValidEmail(emailInput.value.trim()) ? "" : "That doesn't look like a valid email — check for a missing @ or domain.");
+    });
+  }
+  const phoneInput = document.querySelector('[name="phone"]');
+  if (phoneInput) {
+    phoneInput.addEventListener("blur", () => {
+      setFieldError(phoneInput, isValidPhone(phoneInput.value.trim()) ? "" : "That doesn't look like a valid phone number.");
+    });
+  }
+  ["fullName", "targetRole"].forEach(name => {
+    const el = document.querySelector('[name="' + name + '"]');
+    if (!el) return;
+    el.addEventListener("blur", () => {
+      setFieldError(el, el.value.trim() ? "" : "This helps employers identify you — please fill it in.");
+    });
+  });
+}
+
+/* ── PREVIEW BUILDER ──────────────────────────────────────── */
+function getFormData() {
+  const form = document.getElementById("cv-form");
+  const d = {};
+  new FormData(form).forEach((v,k) => d[k] = v.trim());
+  d.experience = [];
+  document.querySelectorAll("#experience-list .repeat-item").forEach(item => {
+    const obj = {};
+    item.querySelectorAll("[data-field]").forEach(el => obj[el.dataset.field] = el.value.trim());
+    d.experience.push(obj);
+  });
+  d.education = [];
+  document.querySelectorAll("#education-list .repeat-item").forEach(item => {
+    const obj = {};
+    item.querySelectorAll("[data-field]").forEach(el => obj[el.dataset.field] = el.value.trim());
+    d.education.push(obj);
+  });
+  return d;
+}
+
+function detailLines(str) {
+  if (!str) return [];
+  return str.split("\n").map(l => l.trim()).filter(Boolean);
+}
+
+function escHtml(str) {
+  return String(str || "")
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+function initials(name) {
+  return (name || "?").split(" ").map(w => w[0]).join("").slice(0,2).toUpperCase();
+}
+
+/* contact row helper */
+function contactRow(icon, text) {
+  if (!text) return "";
+  return `<div class="cv-contact-item">
+    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">${icon}</svg>
+    <span>${escHtml(text)}</span>
+  </div>`;
+}
+const ICONS = {
+  email: '<path d="M4 4h16v16H4z" stroke="none"/><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',
+  phone: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.61 19 19.45 19.45 0 0 1 5 12.39a19.79 19.79 0 0 1-2.92-8.18A2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>',
+  loc:   '<path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
+  web:   '<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/>',
+};
+
+/* ---- MODERN TEMPLATE ---- */
+function buildModern(d) {
+  const skills = d.skills ? d.skills.split(",").map(s=>s.trim()).filter(Boolean) : [];
+  const sidebar = `
+    <div class="cv-sidebar">
+      <div class="cv-avatar">${escHtml(initials(d.fullName))}</div>
+      <div class="cv-name">${escHtml(d.fullName||"Your Name")}</div>
+      <div class="cv-role">${escHtml(d.targetRole||"Your Role")}</div>
+      <div class="cv-section">
+        <h3>Contact</h3>
+        ${contactRow(ICONS.email, d.email)}
+        ${contactRow(ICONS.phone, d.phone)}
+        ${contactRow(ICONS.loc,   d.location)}
+        ${contactRow(ICONS.web,   d.portfolio)}
+      </div>
+      ${skills.length ? `<div class="cv-section"><h3>Skills</h3>
+        ${skills.map(s=>`<span class="cv-skill-pill">${escHtml(s)}</span>`).join("")}
+      </div>` : ""}
+      ${d.languages ? `<div class="cv-section"><h3>Languages</h3>
+        <ul class="cv-list">${d.languages.split(",").map(l=>`<li>${escHtml(l.trim())}</li>`).join("")}</ul>
+      </div>` : ""}
+      ${d.availability ? `<div class="cv-section"><h3>Availability</h3><p>${escHtml(d.availability)}</p></div>` : ""}
+      ${d.nationality  ? `<div class="cv-section"><h3>Nationality</h3><p>${escHtml(d.nationality)}</p></div>` : ""}
+    </div>`;
+
+  const expHtml = d.experience.map(e => `<div class="cv-item">
+    <div class="cv-item-role">${escHtml(e.role||"Role")}</div>
+    <div class="cv-item h4" style="font-size:13px;font-weight:700;color:#111827">${escHtml(e.company||"Company")}</div>
+    <div class="cv-meta">${escHtml(e.dates||"")}${e.place ? " &bull; " + escHtml(e.place) : ""}</div>
+    ${e.details ? `<ul class="cv-list" style="margin-top:8px;padding-left:16px;list-style:disc">${detailLines(e.details).map(l=>`<li>${escHtml(l)}</li>`).join("")}</ul>` : ""}
+  </div>`).join("");
+
+  const eduHtml = d.education.map(e => `<div class="cv-item">
+    <div style="font-size:14px;font-weight:700;color:#111827">${escHtml(e.qualification||"Qualification")}</div>
+    <div style="font-size:13px;color:#374151">${escHtml(e.institution||"")}</div>
+    <div class="cv-meta">${escHtml(e.dates||"")}${e.place ? " &bull; " + escHtml(e.place) : ""}</div>
+    ${e.notes ? `<p style="font-size:12px;color:#6b7280;margin:4px 0 0">${escHtml(e.notes)}</p>` : ""}
+  </div>`).join("");
+
+  const certLines  = detailLines(d.certifications).map(l=>`<li>${escHtml(l)}</li>`).join("");
+  const projLines  = detailLines(d.projects).map(l=>`<li>${escHtml(l)}</li>`).join("");
+  const awardLines = detailLines(d.awards).map(l=>`<li>${escHtml(l)}</li>`).join("");
+
+  const main = `
+    <div class="cv-main">
+      ${d.summary ? `<div class="cv-section"><h3>Professional Profile</h3><p>${escHtml(d.summary)}</p></div>` : ""}
+      ${d.experience.length ? `<div class="cv-section"><h3>Work Experience</h3>${expHtml}</div>` : ""}
+      ${d.education.length  ? `<div class="cv-section"><h3>Education</h3>${eduHtml}</div>` : ""}
+      ${projLines  ? `<div class="cv-section"><h3>Projects</h3><ul class="cv-list" style="padding-left:16px;list-style:disc">${projLines}</ul></div>` : ""}
+      ${certLines  ? `<div class="cv-section"><h3>Certifications</h3><ul class="cv-list" style="padding-left:16px;list-style:disc">${certLines}</ul></div>` : ""}
+      ${awardLines ? `<div class="cv-section"><h3>Awards & Achievements</h3><ul class="cv-list" style="padding-left:16px;list-style:disc">${awardLines}</ul></div>` : ""}
+      ${d.references ? `<div class="cv-section"><h3>References</h3><p>${escHtml(d.references)}</p></div>` : ""}
+      <div class="cv-footer-note">CV generated with ANICADE.CV — anicadetech.xyz</div>
+    </div>`;
+
+  return `<div class="cv-page">${sidebar}${main}</div>`;
+}
+
+/* ---- CLASSIC TEMPLATE ---- */
+function buildClassic(d) {
+  const skills = d.skills ? d.skills.split(",").map(s=>s.trim()).filter(Boolean) : [];
+  const expHtml = d.experience.map(e => `<div class="cv-item">
+    <div style="display:flex;justify-content:space-between;align-items:baseline">
+      <div style="font-size:14px;font-weight:700;color:#111827">${escHtml(e.role||"Role")} — ${escHtml(e.company||"Company")}</div>
+      <div class="cv-meta">${escHtml(e.dates||"")}</div>
+    </div>
+    ${e.place ? `<div class="cv-meta" style="margin-bottom:6px">${escHtml(e.place)}</div>` : ""}
+    ${e.details ? `<ul style="margin:6px 0 0 18px;padding:0;list-style:disc">${detailLines(e.details).map(l=>`<li style="font-size:12.5px;color:#374151;margin-bottom:3px">${escHtml(l)}</li>`).join("")}</ul>` : ""}
+  </div>`).join("");
+
+  const eduHtml = d.education.map(e => `<div class="cv-item">
+    <div style="display:flex;justify-content:space-between;align-items:baseline">
+      <div style="font-size:14px;font-weight:700;color:#111827">${escHtml(e.qualification||"Qualification")}, ${escHtml(e.institution||"")}</div>
+      <div class="cv-meta">${escHtml(e.dates||"")}</div>
+    </div>
+    ${e.notes ? `<p style="font-size:12px;color:#6b7280;margin:4px 0 0">${escHtml(e.notes)}</p>` : ""}
+  </div>`).join("");
+
+  const contacts = [d.email, d.phone, d.location, d.portfolio].filter(Boolean).map(c => `<span style="font-size:12.5px;color:#4b5563">${escHtml(c)}</span>`).join(" &nbsp;|&nbsp; ");
+  const certLines  = detailLines(d.certifications).map(l=>`<li>${escHtml(l)}</li>`).join("");
+  const projLines  = detailLines(d.projects).map(l=>`<li>${escHtml(l)}</li>`).join("");
+  const awardLines = detailLines(d.awards).map(l=>`<li>${escHtml(l)}</li>`).join("");
+
+  return `<div class="cv-page" style="display:block;padding:40px 52px">
+    <div style="border-bottom:3px solid var(--cv-accent);padding-bottom:18px;margin-bottom:22px">
+      <div style="font-size:34px;font-weight:800;color:#111827;font-family:var(--cv-font)">${escHtml(d.fullName||"Your Name")}</div>
+      <div style="font-size:14px;font-weight:800;color:var(--cv-accent);text-transform:uppercase;letter-spacing:.8px;margin:4px 0 10px">${escHtml(d.targetRole||"")}</div>
+      <div>${contacts}</div>
+    </div>
+    ${d.summary ? `<div class="cv-section"><h3>${escHtml("Professional Profile")}</h3><p>${escHtml(d.summary)}</p></div>` : ""}
+    ${skills.length ? `<div class="cv-section"><h3>Skills</h3><p>${skills.map(s=>`<span class="cv-skill-pill">${escHtml(s)}</span>`).join(" ")}</p></div>` : ""}
+    ${d.experience.length ? `<div class="cv-section"><h3>Work Experience</h3>${expHtml}</div>` : ""}
+    ${d.education.length  ? `<div class="cv-section"><h3>Education</h3>${eduHtml}</div>` : ""}
+    ${projLines  ? `<div class="cv-section"><h3>Projects</h3><ul style="margin:0 0 0 18px;padding:0;list-style:disc">${projLines}</ul></div>` : ""}
+    ${certLines  ? `<div class="cv-section"><h3>Certifications</h3><ul style="margin:0 0 0 18px;padding:0;list-style:disc">${certLines}</ul></div>` : ""}
+    ${awardLines ? `<div class="cv-section"><h3>Awards & Achievements</h3><ul style="margin:0 0 0 18px;padding:0;list-style:disc">${awardLines}</ul></div>` : ""}
+    ${d.languages||d.availability||d.nationality ? `<div class="cv-section"><h3>Additional Information</h3>
+      ${d.languages ? `<p><strong>Languages:</strong> ${escHtml(d.languages)}</p>` : ""}
+      ${d.availability ? `<p><strong>Availability:</strong> ${escHtml(d.availability)}</p>` : ""}
+      ${d.nationality ? `<p><strong>Nationality:</strong> ${escHtml(d.nationality)}</p>` : ""}
+    </div>` : ""}
+    ${d.references ? `<div class="cv-section"><h3>References</h3><p>${escHtml(d.references)}</p></div>` : ""}
+    <div class="cv-footer-note">CV generated with ANICADE.CV — anicadetech.xyz</div>
+  </div>`;
+}
+
+/* ---- EXECUTIVE TEMPLATE ---- */
+function buildExecutive(d) {
+  const skills = d.skills ? d.skills.split(",").map(s=>s.trim()).filter(Boolean) : [];
+  const expHtml = d.experience.map(e => `<div class="cv-item">
+    <div style="font-size:14px;font-weight:700;color:#111827">${escHtml(e.role||"Role")}</div>
+    <div style="font-size:13px;font-weight:600;color:var(--cv-accent)">${escHtml(e.company||"")}</div>
+    <div class="cv-meta" style="margin-bottom:6px">${escHtml(e.dates||"")}${e.place ? " · "+escHtml(e.place):""}</div>
+    ${e.details ? `<ul style="margin:6px 0 0 16px;padding:0;list-style:disc">${detailLines(e.details).map(l=>`<li style="font-size:12.5px;color:#374151;margin-bottom:3px">${escHtml(l)}</li>`).join("")}</ul>` : ""}
+  </div>`).join("");
+  const eduHtml = d.education.map(e => `<div class="cv-item">
+    <div style="font-size:13px;font-weight:700;color:#111827">${escHtml(e.qualification||"Qualification")}</div>
+    <div style="font-size:12px;color:#4b5563">${escHtml(e.institution||"")}</div>
+    <div class="cv-meta">${escHtml(e.dates||"")}</div>
+  </div>`).join("");
+  const certLines  = detailLines(d.certifications).map(l=>`<li style="font-size:12px;margin-bottom:4px">${escHtml(l)}</li>`).join("");
+  const awardLines = detailLines(d.awards).map(l=>`<li style="font-size:12px;margin-bottom:4px">${escHtml(l)}</li>`).join("");
+  const contacts = [
+    d.email ? `<span style="font-size:12px;color:rgba(255,255,255,.75)">${escHtml(d.email)}</span>` : "",
+    d.phone ? `<span style="font-size:12px;color:rgba(255,255,255,.75)">${escHtml(d.phone)}</span>` : "",
+    d.location ? `<span style="font-size:12px;color:rgba(255,255,255,.75)">${escHtml(d.location)}</span>` : "",
+    d.portfolio ? `<span style="font-size:12px;color:rgba(255,255,255,.75)">${escHtml(d.portfolio)}</span>` : "",
+  ].filter(Boolean).join(" &nbsp;|&nbsp; ");
+
+  return `<div class="cv-page">
+    <div style="background:#1a2332;padding:34px 44px">
+      <div style="font-size:32px;font-weight:800;color:white;font-family:var(--cv-font);margin-bottom:4px">${escHtml(d.fullName||"Your Name")}</div>
+      <div style="font-size:13px;font-weight:800;color:var(--cv-accent);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px">${escHtml(d.targetRole||"")}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px 20px">${contacts}</div>
+    </div>
+    <div style="display:grid;grid-template-columns:34% 66%">
+      <div style="padding:28px 22px 28px 44px;background:#f7f9fb;border-right:1px solid #e5e7eb">
+        ${skills.length ? `<div class="cv-section"><h3>Core Competencies</h3>${skills.map(s=>`<span class="cv-skill-pill">${escHtml(s)}</span>`).join(" ")}</div>` : ""}
+        ${d.education.length ? `<div class="cv-section"><h3>Education</h3>${eduHtml}</div>` : ""}
+        ${certLines ? `<div class="cv-section"><h3>Certifications</h3><ul style="margin:0 0 0 16px;padding:0;list-style:disc">${certLines}</ul></div>` : ""}
+        ${awardLines ? `<div class="cv-section"><h3>Awards</h3><ul style="margin:0 0 0 16px;padding:0;list-style:disc">${awardLines}</ul></div>` : ""}
+        ${d.languages ? `<div class="cv-section"><h3>Languages</h3><p>${escHtml(d.languages)}</p></div>` : ""}
+        ${d.availability ? `<div class="cv-section"><h3>Availability</h3><p>${escHtml(d.availability)}</p></div>` : ""}
+      </div>
+      <div style="padding:28px 36px 28px 28px">
+        ${d.summary ? `<div class="cv-section"><h3>Executive Summary</h3><p style="font-size:13px;line-height:1.65;color:#374151">${escHtml(d.summary)}</p></div>` : ""}
+        ${d.experience.length ? `<div class="cv-section"><h3>Professional Experience</h3>${expHtml}</div>` : ""}
+        ${d.references ? `<div class="cv-section"><h3>References</h3><p style="font-size:12.5px;color:#374151">${escHtml(d.references)}</p></div>` : ""}
+        <div class="cv-footer-note">CV generated with ANICADE.CV — anicadetech.xyz</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ---- MINIMAL TEMPLATE ---- */
+function buildMinimal(d) {
+  const skills = d.skills ? d.skills.split(",").map(s=>s.trim()).filter(Boolean) : [];
+  const contacts = [d.email, d.phone, d.location, d.portfolio].filter(Boolean).map(c=>`<span style="font-size:12.5px;color:#6b7280">${escHtml(c)}</span>`).join(" &nbsp;·&nbsp; ");
+  const expHtml = d.experience.map(e => `<div class="cv-item">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px">
+      <div style="font-size:14px;font-weight:700;color:#111827">${escHtml(e.role||"Role")}</div>
+      <div class="cv-meta">${escHtml(e.dates||"")}</div>
+    </div>
+    <div style="font-size:12.5px;color:var(--cv-accent);font-weight:600;margin-bottom:5px">${escHtml(e.company||"")}${e.place?" · "+escHtml(e.place):""}</div>
+    ${e.details ? `<ul style="margin:6px 0 0 16px;padding:0;list-style:disc">${detailLines(e.details).map(l=>`<li style="font-size:12.5px;color:#374151;margin-bottom:3px">${escHtml(l)}</li>`).join("")}</ul>` : ""}
+  </div>`).join("");
+  const eduHtml = d.education.map(e => `<div class="cv-item">
+    <div style="display:flex;justify-content:space-between">
+      <div style="font-size:14px;font-weight:700;color:#111827">${escHtml(e.qualification||"Qualification")}</div>
+      <div class="cv-meta">${escHtml(e.dates||"")}</div>
+    </div>
+    <div style="font-size:12.5px;color:#6b7280">${escHtml(e.institution||"")}</div>
+  </div>`).join("");
+  const certLines  = detailLines(d.certifications).map(l=>`<li style="font-size:12px;margin-bottom:3px">${escHtml(l)}</li>`).join("");
+  const projLines  = detailLines(d.projects).map(l=>`<li style="font-size:12px;margin-bottom:3px">${escHtml(l)}</li>`).join("");
+  const awardLines = detailLines(d.awards).map(l=>`<li style="font-size:12px;margin-bottom:3px">${escHtml(l)}</li>`).join("");
+
+  return `<div class="cv-page" style="display:block;padding:48px 56px">
+    <div style="border-bottom:1px solid #e5e7eb;padding-bottom:22px;margin-bottom:28px">
+      <div style="font-size:36px;font-weight:800;color:#111827;letter-spacing:-1px;font-family:var(--cv-font)">${escHtml(d.fullName||"Your Name")}</div>
+      <div style="font-size:13px;font-weight:800;color:var(--cv-accent);text-transform:uppercase;letter-spacing:.8px;margin:5px 0 12px">${escHtml(d.targetRole||"")}</div>
+      <div>${contacts}</div>
+    </div>
+    ${d.summary ? `<div class="cv-section"><h3>Profile</h3><p style="font-size:13px;line-height:1.65;color:#374151;margin:0">${escHtml(d.summary)}</p></div>` : ""}
+    ${skills.length ? `<div class="cv-section"><h3>Skills</h3><div>${skills.map(s=>`<span class="cv-skill-pill">${escHtml(s)}</span>`).join(" ")}</div></div>` : ""}
+    ${d.experience.length ? `<div class="cv-section"><h3>Experience</h3>${expHtml}</div>` : ""}
+    ${d.education.length  ? `<div class="cv-section"><h3>Education</h3>${eduHtml}</div>` : ""}
+    ${projLines  ? `<div class="cv-section"><h3>Projects</h3><ul style="margin:0 0 0 16px;padding:0;list-style:disc">${projLines}</ul></div>` : ""}
+    ${certLines  ? `<div class="cv-section"><h3>Certifications</h3><ul style="margin:0 0 0 16px;padding:0;list-style:disc">${certLines}</ul></div>` : ""}
+    ${awardLines ? `<div class="cv-section"><h3>Awards</h3><ul style="margin:0 0 0 16px;padding:0;list-style:disc">${awardLines}</ul></div>` : ""}
+    ${d.languages||d.availability ? `<div class="cv-section"><h3>Additional</h3>
+      ${d.languages ? `<p style="margin:0 0 4px;font-size:12.5px;color:#374151"><strong>Languages:</strong> ${escHtml(d.languages)}</p>` : ""}
+      ${d.availability ? `<p style="margin:0;font-size:12.5px;color:#374151"><strong>Availability:</strong> ${escHtml(d.availability)}</p>` : ""}
+    </div>` : ""}
+    ${d.references ? `<div class="cv-section"><h3>References</h3><p style="font-size:12.5px;color:#374151;margin:0">${escHtml(d.references)}</p></div>` : ""}
+    <div class="cv-footer-note">CV generated with ANICADE.CV — anicadetech.xyz</div>
+  </div>`;
+}
+
+function updatePreview() {
+  const d = getFormData();
+  const preview = document.getElementById("cv-preview");
+  preview.className = "cv-document " + currentTemplate.class;
+  preview.style.setProperty("--cv-accent", currentAccent);
+  preview.style.setProperty("--cv-font", "'" + (d.cvFont || "Inter") + "'");
+
+  let html = "";
+  switch (currentTemplate.id) {
+    case "classic":   html = buildClassic(d);   break;
+    case "executive": html = buildExecutive(d); break;
+    case "minimal":   html = buildMinimal(d);   break;
+    default:          html = buildModern(d);     break;
+  }
+  preview.innerHTML = html;
+
+  const name = d.fullName || "";
+  const role = d.targetRole || "";
+  document.getElementById("preview-title").textContent =
+    name ? name + (role ? " — " + role : "") : "Your CV is taking shape";
+
+  updateCompletion();
+  scheduleDraftSave();
+}
+
+/* live form events */
+document.getElementById("cv-form").addEventListener("input", updatePreview);
+
+/* ── TOOLBAR BUTTONS ──────────────────────────────────────── */
+document.getElementById("print-button").addEventListener("click", () => window.print());
+
+document.getElementById("clear-button").addEventListener("click", () => {
+  if (!confirm("Clear all form data?")) return;
+  document.getElementById("cv-form").reset();
+  document.getElementById("experience-list").innerHTML = "";
+  document.getElementById("education-list").innerHTML = "";
+  safeRemoveItem(DRAFT_KEY);
+  document.getElementById("draft-banner").hidden = true;
+  updatePreview();
+});
+
+document.getElementById("sample-button").addEventListener("click", () => {
+  const form = document.getElementById("cv-form");
+  const set = (n,v) => { if(form.elements[n]) form.elements[n].value = v; };
+  set("fullName",      "Mutale Chanda");
+  set("targetRole",    "Software Developer");
+  set("email",         "mutale.chanda@email.com");
+  set("phone",         "+260 977 123 456");
+  set("location",      "Lusaka, Zambia");
+  set("portfolio",     "https://linkedin.com/in/mutalechanda");
+  set("summary",       "Ambitious software developer with 4 years' experience building scalable web applications for Zambian SMEs and international clients. Proficient in JavaScript, Python and cloud deployment. Passionate about using technology to solve real-world problems across Africa.");
+  set("skills",        "JavaScript, Python, React, Node.js, REST APIs, PostgreSQL, Git, Docker, Figma");
+  set("projects",      "ANICADE Tech Platform — built multi-page web platform with JSONBin backend, EmailJS and PWA features\nZedMarket — e-commerce site for Zambian vendors with mobile-money payment integration");
+  set("certifications","AWS Cloud Practitioner, Amazon Web Services, 2023\nGoogle Analytics Certified, Google, 2022");
+  set("awards",        "Best Developer — ZICTA Digital Innovation Awards 2023\nTop Performer — Roan Antelope Ltd Q1 2022");
+  set("languages",     "English (Fluent), Bemba (Native), Nyanja (Conversational)");
+  set("availability",  "2 weeks notice");
+  set("references",    "Available on request");
+  set("nationality",   "Zambian");
+
+  document.getElementById("experience-list").innerHTML = "";
+  document.getElementById("education-list").innerHTML = "";
+
+  addRepeat("experience");
+  const expItem = document.querySelector("#experience-list .repeat-item");
+  expItem.querySelector("[data-field=role]").value    = "Lead Frontend Developer";
+  expItem.querySelector("[data-field=company]").value = "ANICADE Tech";
+  expItem.querySelector("[data-field=dates]").value   = "Jan 2022 – Present";
+  expItem.querySelector("[data-field=place]").value   = "Lusaka, Zambia";
+  expItem.querySelector("[data-field=details]").value =
+    "Led development of anicadetech.xyz from ground up using vanilla HTML/CSS/JS\nBuilt agent portal, admin dashboard and EmailJS-integrated application system\nIntegrated JSONBin as lightweight backend — 40% reduction in infrastructure costs\nMentored 2 junior developers in responsive design and API integration";
+
+  addRepeat("education");
+  const eduItem = document.querySelector("#education-list .repeat-item");
+  eduItem.querySelector("[data-field=qualification]").value = "Bachelor of Science in Computer Science";
+  eduItem.querySelector("[data-field=institution]").value   = "University of Zambia";
+  eduItem.querySelector("[data-field=dates]").value         = "2017 – 2021";
+  eduItem.querySelector("[data-field=place]").value         = "Lusaka, Zambia";
+  eduItem.querySelector("[data-field=notes]").value         = "Graduated with Merit. Final year project: Smart agricultural advisory system using ML.";
+
+  updatePreview();
+});
+
+document.getElementById("html-button").addEventListener("click", () => {
+  const d = getFormData();
+  const preview = document.getElementById("cv-preview").outerHTML;
+  const blob = new Blob([`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${escHtml(d.fullName||"CV")} — CV</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#e5e7eb;font-family:Inter,sans-serif;display:flex;justify-content:center;padding:40px 16px}
+.cv-document{--cv-accent:${currentAccent};--cv-font:'Inter'}
+${document.querySelector("style").textContent}
+</style></head><body>${preview}</body></html>`], {type:"text/html"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = (d.fullName || "CV").replace(/\s+/g,"_") + "_CV.html";
+  a.click();
+  showToast("CV exported as HTML");
+});
+
+/* ── TEMPLATE GALLERY ─────────────────────────────────────── */
+function buildGallery() {
+  const grid = document.getElementById("template-grid");
+  grid.innerHTML = "";
+  TEMPLATES.forEach(tpl => {
+    const card = document.createElement("div");
+    card.className = "template-card" + (tpl.id === currentTemplate.id ? " selected" : "");
+    card.innerHTML = `
+      <div class="template-thumb">
+        <div class="template-thumb-inner" id="thumb-${tpl.id}"></div>
+      </div>
+      <div class="template-info">
+        <div class="template-name">${tpl.name}</div>
+        <div class="template-desc">${tpl.desc}</div>
+        <div class="template-accents" id="accents-${tpl.id}">
+          ${tpl.accents.map((a,i) => `<button type="button" class="accent-dot ${i===0&&tpl.id===currentTemplate.id?'active':''}" data-tpl="${tpl.id}" data-hex="${a.hex}" aria-label="${a.label} accent" title="${a.label}" style="background:${a.hex}"></button>`).join("")}
+        </div>
+        <button type="button" class="select-template-btn ${tpl.id===currentTemplate.id?'selected-state':''}" data-tpl="${tpl.id}">
+          ${tpl.id===currentTemplate.id ? "Currently selected" : "Use this template"}
+        </button>
+      </div>`;
+    grid.appendChild(card);
+  });
+
+  /* render mini previews */
+  setTimeout(() => {
+    const d = getFormData();
+    TEMPLATES.forEach(tpl => {
+      const thumb = document.getElementById("thumb-"+tpl.id);
+      if (!thumb) return;
+      const prev = document.createElement("div");
+      prev.className = "cv-document " + tpl.class;
+      prev.style.cssText = `--cv-accent:${tpl.accents[0].hex};--cv-font:'Inter';transform:scale(.38) translateX(-50%) translateY(-50%);transform-origin:0 0;position:absolute;top:50%;left:50%;width:210mm;pointer-events:none`;
+      let html = "";
+      switch (tpl.id) {
+        case "classic":   html = buildClassic(d);   break;
+        case "executive": html = buildExecutive(d); break;
+        case "minimal":   html = buildMinimal(d);   break;
+        default:          html = buildModern(d);     break;
+      }
+      prev.innerHTML = html;
+      thumb.innerHTML = "";
+      thumb.appendChild(prev);
+    });
+  }, 80);
+}
+
+/* Delegated listeners for the template gallery — bound once, survive every
+   re-render of #template-grid (buildGallery replaces innerHTML each time),
+   which is what makes these buttons reliable across devices. */
+document.getElementById("template-grid").addEventListener("click", (e) => {
+  const dot = e.target.closest(".accent-dot");
+  if (dot) {
+    const tplId = dot.dataset.tpl;
+    const hex = dot.dataset.hex;
+    const tpl = TEMPLATES.find(t => t.id === tplId);
+    if (!tpl) return;
+    currentAccent = hex;
+    if (tplId !== currentTemplate.id) {
+      currentTemplate = tpl;
+      buildGallery();
+      showToast("Template switched to " + tpl.name);
+    } else {
+      document.querySelectorAll("#accents-"+tplId+" .accent-dot").forEach(d => d.classList.remove("active"));
+      dot.classList.add("active");
+    }
+    updatePreview();
+    return;
+  }
+  const selectBtn = e.target.closest(".select-template-btn");
+  if (selectBtn) {
+    const tpl = TEMPLATES.find(t => t.id === selectBtn.dataset.tpl);
+    if (!tpl) return;
+    currentTemplate = tpl;
+    currentAccent   = tpl.accents[0].hex;
+    buildGallery();
+    updatePreview();
+    showToast("Template switched to " + tpl.name);
+  }
+});
+
+/* ── DRAFT AUTO-SAVE / RESTORE ────────────────────────────── */
+let draftSaveTimer = null;
+function scheduleDraftSave() {
+  clearTimeout(draftSaveTimer);
+  draftSaveTimer = setTimeout(saveDraft, 500);
+}
+function saveDraft() {
+  const payload = {
+    data: getFormData(),
+    template: currentTemplate.id,
+    accent: currentAccent,
+    savedAt: Date.now()
+  };
+  safeSetItem(DRAFT_KEY, JSON.stringify(payload));
+}
+function draftHasContent(data) {
+  if (!data) return false;
+  return !!(data.fullName || data.targetRole || data.summary ||
+    (data.experience && data.experience.length) ||
+    (data.education && data.education.length));
+}
+/* Restores any saved draft automatically on load, so refreshing the page
+   or closing the tab never wipes out what the user typed. */
+function checkForDraft() {
+  const raw = safeGetItem(DRAFT_KEY);
+  if (!raw) return;
+  try {
+    const parsed = JSON.parse(raw);
+    if (draftHasContent(parsed.data)) {
+      const tpl = TEMPLATES.find(t => t.id === parsed.template);
+      loadCVData({ data: parsed.data, template: tpl ? tpl.id : "modern", accent: parsed.accent });
+      document.getElementById("draft-banner").hidden = false;
+    }
+  } catch {
+    safeRemoveItem(DRAFT_KEY);
+  }
+}
+document.getElementById("discard-draft-btn").addEventListener("click", () => {
+  if (!confirm("Clear your restored draft and start with a blank CV?")) return;
+  document.getElementById("cv-form").reset();
+  document.getElementById("experience-list").innerHTML = "";
+  document.getElementById("education-list").innerHTML = "";
+  safeRemoveItem(DRAFT_KEY);
+  document.getElementById("draft-banner").hidden = true;
+  updatePreview();
+});
+
+/* ── RECENT CVs ───────────────────────────────────────────── */
+function savedCVs() {
+  try { return JSON.parse(safeGetItem("anicade_cvs") || "{}"); }
+  catch { return {}; }
+}
+function saveCVs(obj) {
+  return safeSetItem("anicade_cvs", JSON.stringify(obj));
+}
+
+document.getElementById("save-cv-btn").addEventListener("click", () => {
+  const name = document.getElementById("save-name-input").value.trim();
+  if (!name) { showToast("Enter a name for this CV first"); return; }
+  if (!STORAGE_OK) { showToast("Storage is unavailable in this browser mode"); return; }
+  const cvs = savedCVs();
+  cvs[name] = { data: getFormData(), template: currentTemplate.id, accent: currentAccent, saved: new Date().toLocaleDateString() };
+  const ok = saveCVs(cvs);
+  document.getElementById("save-name-input").value = "";
+  renderRecent();
+  showToast(ok ? "CV saved: " + name : "Could not save — storage may be full or blocked");
+});
+
+function renderRecent() {
+  document.getElementById("storage-warning").hidden = STORAGE_OK;
+  const grid = document.getElementById("recent-grid");
+  const cvs = savedCVs();
+  const keys = Object.keys(cvs);
+  if (!keys.length) {
+    grid.innerHTML = `<div class="empty-recent" style="grid-column:1/-1"><p>No saved CVs yet. Build a CV and save it with a name above.</p></div>`;
+    return;
+  }
+  grid.innerHTML = keys.map(k => {
+    const cv = cvs[k];
+    return `<div class="recent-card">
+      <h4>${escHtml(k)}</h4>
+      <div class="rc-meta">${escHtml(cv.data.fullName||"")} · ${escHtml(cv.data.targetRole||"")} · Saved ${escHtml(cv.saved||"")}</div>
+      <div class="recent-actions">
+        <button type="button" class="rc-load-btn" data-key="${escHtml(k)}">Load</button>
+        <button type="button" class="rc-del-btn" data-key="${escHtml(k)}">Delete</button>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+/* Delegated listeners for Recent CV cards — same reasoning as the template
+   grid: survives every re-render, no risk of stale/duplicate bindings. */
+document.getElementById("recent-grid").addEventListener("click", (e) => {
+  const loadBtn = e.target.closest(".rc-load-btn");
+  if (loadBtn) {
+    const cv = savedCVs()[loadBtn.dataset.key];
+    if (!cv) return;
+    loadCVData(cv);
+    document.querySelector('[data-tab="builder"]').click();
+    showToast("CV loaded: " + loadBtn.dataset.key);
+    return;
+  }
+  const delBtn = e.target.closest(".rc-del-btn");
+  if (delBtn) {
+    if (!confirm("Delete saved CV: " + delBtn.dataset.key + "?")) return;
+    const cvs = savedCVs();
+    delete cvs[delBtn.dataset.key];
+    saveCVs(cvs);
+    renderRecent();
+  }
+});
+
+function loadCVData(cv) {
+  const form = document.getElementById("cv-form");
+  const d = cv.data;
+  const set = (n,v) => { if(form.elements[n]) form.elements[n].value = v||""; };
+  ["fullName","targetRole","email","phone","location","portfolio","summary","skills","projects","certifications","awards","languages","availability","references","nationality"].forEach(k => set(k, d[k]));
+
+  document.getElementById("experience-list").innerHTML = "";
+  document.getElementById("education-list").innerHTML = "";
+  (d.experience||[]).forEach(e => {
+    addRepeat("experience");
+    const items = document.querySelectorAll("#experience-list .repeat-item");
+    const item = items[items.length-1];
+    Object.entries(e).forEach(([k,v]) => {
+      const el = item.querySelector("[data-field="+k+"]");
+      if (el) el.value = v;
+    });
+  });
+  (d.education||[]).forEach(e => {
+    addRepeat("education");
+    const items = document.querySelectorAll("#education-list .repeat-item");
+    const item = items[items.length-1];
+    Object.entries(e).forEach(([k,v]) => {
+      const el = item.querySelector("[data-field="+k+"]");
+      if (el) el.value = v;
+    });
+  });
+
+  const tpl = TEMPLATES.find(t => t.id === cv.template);
+  if (tpl) { currentTemplate = tpl; currentAccent = cv.accent || tpl.accents[0].hex; }
+  updatePreview();
+}
+
+/* ── AI ASSISTANT (logic lives in ai-logic.js, this wires up the UI) ── */
+document.getElementById("ai-fab").addEventListener("click", () => {
+  document.getElementById("ai-panel").classList.toggle("open");
+});
+document.getElementById("ai-close").addEventListener("click", () => {
+  document.getElementById("ai-panel").classList.remove("open");
+});
+
+document.getElementById("ai-input").addEventListener("keydown", e => {
+  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendAI(); }
+});
+document.getElementById("ai-send").addEventListener("click", sendAI);
+
+/* render suggestion chips once at load */
+(function renderSuggestionChips() {
+  const wrap = document.getElementById("ai-suggestions");
+  if (!wrap || !window.AnicadeAI) return;
+  const chips = AnicadeAI.SUGGESTED_QUESTIONS.slice(0, 4);
+  wrap.innerHTML = chips.map(q => `<button type="button" class="ai-suggestion-chip">${escHtml(q)}</button>`).join("");
+  wrap.addEventListener("click", (e) => {
+    const chip = e.target.closest(".ai-suggestion-chip");
+    if (!chip) return;
+    document.getElementById("ai-input").value = chip.textContent;
+    sendAI();
+  });
+})();
+
+/* check + display provider status */
+(async function initAIStatus() {
+  const statusEl = document.getElementById("ai-status");
+  if (!window.AnicadeAI) { statusEl.textContent = "unavailable"; statusEl.classList.add("offline"); return; }
+  statusEl.textContent = "checking…";
+  const online = await AnicadeAI.pingProvider();
+  statusEl.textContent = online ? "online" : "offline mode";
+  statusEl.classList.add(online ? "online" : "offline");
+})();
+
+async function sendAI() {
+  const input = document.getElementById("ai-input");
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = "";
+  appendAI("user", msg);
+  const loader = appendAI("ai", "Thinking…", true);
+
+  const d = getFormData();
+  try {
+    const reply = await AnicadeAI.getChatReply(msg, d);
+    loader.remove();
+    appendAI("ai", reply);
+  } catch (err) {
+    loader.remove();
+    appendAI("ai", "Sorry, I couldn't reach any writing service right now. Please check your internet connection and try again in a moment.");
+  }
+}
+
+function appendAI(role, text, loading = false) {
+  const messages = document.getElementById("ai-messages");
+  const div = document.createElement("div");
+  div.className = "ai-msg " + role + (loading ? " loading" : "");
+  div.textContent = text;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+  return div;
+}
+
+/* AI Enhance inline buttons */
+document.querySelectorAll(".ai-enhance-btn[data-field]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const fieldName = btn.dataset.field;
+    const ta = document.querySelector("[name='" + fieldName + "']");
+    aiEnhanceField(ta, fieldName === "summary" ? "professional CV summary paragraph" : "CV section");
+  });
+});
+document.querySelectorAll(".spell-btn[data-field]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const fieldName = btn.dataset.field;
+    const ta = document.querySelector("[name='" + fieldName + "']");
+    runSpellCheck(ta, btn);
+  });
+});
+
+async function aiEnhanceField(textarea, context) {
+  if (!textarea) return;
+  const original = textarea.value.trim();
+  if (!original) { showToast("Add some text first, then use AI Enhance"); return; }
+  const d = getFormData();
+  const btns = document.querySelectorAll(".ai-enhance-btn");
+  btns.forEach(b => b.disabled = true);
+  textarea.style.opacity = ".5";
+  try {
+    const improved = await AnicadeAI.enhanceText(original, context, d.targetRole || "professional");
+    if (improved) {
+      textarea.value = improved.trim();
+      updatePreview();
+      showToast("Text enhanced");
+    } else {
+      showToast("AI enhance returned nothing — try again");
+    }
+  } catch {
+    showToast("AI enhance failed — check connection, using offline suggestions instead");
+    const fallback = AnicadeAI.localEnhance(original);
+    if (fallback && fallback !== original) {
+      textarea.value = fallback;
+      updatePreview();
+    }
+  }
+  btns.forEach(b => b.disabled = false);
+  textarea.style.opacity = "1";
+}
+
+/* ── SPELL CHECK ───────────────────────────────────────────── */
+async function runSpellCheck(textarea, triggerBtn) {
+  if (!textarea) return;
+  const text = textarea.value.trim();
+  if (!text) { showToast("Nothing to check yet"); return; }
+  if (triggerBtn) triggerBtn.disabled = true;
+  try {
+    const issues = await AnicadeAI.checkSpelling(text);
+    if (!issues.length) {
+      showToast("No spelling issues found ✓");
+    } else {
+      appendAI("ai", "Spelling check found " + issues.length + " possible issue" + (issues.length===1?"":"s") + ":\n" +
+        issues.slice(0, 8).map(i => "• \"" + i.bad + "\" → " + (i.suggestions[0] || "check spelling")).join("\n"));
+      document.getElementById("ai-panel").classList.add("open");
+      showToast("Found " + issues.length + " possible spelling issue(s) — see AI panel");
+    }
+  } catch {
+    showToast("Spell check service unavailable right now — your browser's built-in spellcheck (red underlines) still works");
+  }
+  if (triggerBtn) triggerBtn.disabled = false;
+}
+
+/* ── PROMO / AD OVERLAY ───────────────────────────────────── */
+const PROMO_SESSION_KEY = "anicade_promo_shown_v1";
+function openPromo() {
+  const overlay = document.getElementById("promo-overlay");
+  const fill = document.getElementById("promo-timer-fill");
+  fill.style.animation = "none";
+  void fill.offsetWidth; /* restart animation */
+  fill.style.animation = "promo-countdown 5s linear forwards";
+  overlay.classList.add("open");
+  clearTimeout(window.__promoTimer);
+  window.__promoTimer = setTimeout(closePromo, 5000);
+}
+function closePromo() {
+  document.getElementById("promo-overlay").classList.remove("open");
+  clearTimeout(window.__promoTimer);
+}
+document.getElementById("promo-overlay").addEventListener("click", (e) => {
+  if (e.target.id === "promo-overlay") closePromo();
+});
+document.getElementById("promo-close").addEventListener("click", (e) => {
+  e.stopPropagation();
+  closePromo();
+});
+document.getElementById("promo-card").addEventListener("click", (e) => {
+  if (e.target.closest("#promo-close") || e.target.closest("#promo-cta")) return;
+  window.open("https://www.anicadetech.xyz", "_blank", "noreferrer");
+});
+
+/* ── TOAST ────────────────────────────────────────────────── */
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2800);
+}
+
+/* ── INIT ─────────────────────────────────────────────────── */
+attachValidation();
+checkForDraft();
+if (!STORAGE_OK) {
+  document.getElementById("storage-warning").hidden = false;
+}
+updatePreview();
+
+/* show the ANICADE Tech promo once per browser session, a couple seconds
+   after load so it never blocks the first paint of the CV builder */
+if (!sessionStorage.getItem(PROMO_SESSION_KEY)) {
+  setTimeout(() => {
+    openPromo();
+    try { sessionStorage.setItem(PROMO_SESSION_KEY, "1"); } catch {}
+  }, 2500);
+}
+</script>
 </body>
 </html>
